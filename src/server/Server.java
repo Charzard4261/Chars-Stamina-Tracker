@@ -8,69 +8,90 @@ import java.util.HashSet;
 
 public class Server {
 
-	public static ServerUI gui;
+	public ServerUI gui;
+	public ServerGMUI gmui;
 
-	public static HashSet<Handler> handlers = new HashSet<Handler>();
+	public HashSet<Handler> handlers = new HashSet<Handler>();
 
-	public static HashSet<String> names = new HashSet<String>();
+	public HashSet<String> names = new HashSet<String>();
 
-	public static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
+	public HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
 
-	public static boolean p1 = false;
-	public static int player1Stam = 10;
-	public static int player1CStam = 10;
-	public static int player1Gold = 0;
-	public static int player1c1Stam = 10;
-	public static int player1c1CStam = 10;
-	public static int player1c2Stam = 10;
-	public static int player1c2CStam = 10;
-	public static boolean player1Action1 = true;
-	public static boolean player1Action2 = true;
-	public static boolean player1Action3 = true;
-	public static boolean player1Action4 = true;
-	public static boolean player1Action5 = true;
+	// @formatter:off
 
-	public static boolean p2 = false;
-	public static int player2Stam = 10;
-	public static int player2CStam = 10;
-	public static int player2Gold = 0;
-	public static int player2c1Stam = 10;
-	public static int player2c1CStam = 10;
-	public static int player2c2Stam = 10;
-	public static int player2c2CStam = 10;
-	public static boolean player2Action1 = true;
-	public static boolean player2Action2 = true;
-	public static boolean player2Action3 = true;
-	public static boolean player2Action4 = true;
-	public static boolean player2Action5 = true;
+	public boolean p1 = false;
+	public int player1Stam = 10;
+	public int player1CStam = 10;
+	public int player1Gold = 0;
+	public int player1c1Stam = 10;
+	public int player1c1CStam = 10;
+	public int player1c2Stam = 10;
+	public int player1c2CStam = 10;
+	public boolean 
+			player1Action1 = true, 
+			player1Action2 = true, 
+			player1Action3 = true,
+			player1Action4 = true, 
+			player1Action5 = true,
+			player1Action6 = true,
+			player1Action7 = true,
+			player1Action8 = true;
 
-	public static boolean p3 = false;
-	public static int player3Stam = 10;
-	public static int player3CStam = 10;
-	public static int player3Gold = 0;
-	public static int player3c1Stam = 10;
-	public static int player3c1CStam = 10;
-	public static int player3c2Stam = 10;
-	public static int player3c2CStam = 10;
-	public static boolean player3Action1 = true;
-	public static boolean player3Action2 = true;
-	public static boolean player3Action3 = true;
-	public static boolean player3Action4 = true;
-	public static boolean player3Action5 = true;
+	public boolean p2 = false;
+	public int player2Stam = 10;
+	public int player2CStam = 10;
+	public int player2Gold = 0;
+	public int player2c1Stam = 10;
+	public int player2c1CStam = 10;
+	public int player2c2Stam = 10;
+	public int player2c2CStam = 10;
+	public boolean 
+			player2Action1 = true, 
+			player2Action2 = true, 
+			player2Action3 = true,
+			player2Action4 = true, 
+			player2Action5 = true, 
+			player2Action6 = true, 
+			player2Action7 = true, 
+			player2Action8 = true;
 
-	public static boolean p4 = false;
-	public static int player4Stam = 10;
-	public static int player4CStam = 10;
-	public static int player4Gold = 0;
-	public static int player4c1Stam = 10;
-	public static int player4c1CStam = 10;
-	public static int player4c2Stam = 10;
-	public static int player4c2CStam = 10;
-	public static boolean player4Action1 = true;
-	public static boolean player4Action2 = true;
-	public static boolean player4Action3 = true;
-	public static boolean player4Action4 = true;
-	public static boolean player4Action5 = true;
+	public boolean p3 = false;
+	public int player3Stam = 10;
+	public int player3CStam = 10;
+	public int player3Gold = 0;
+	public int player3c1Stam = 10;
+	public int player3c1CStam = 10;
+	public int player3c2Stam = 10;
+	public int player3c2CStam = 10;
+	public boolean 
+			player3Action1 = true, 
+			player3Action2 = true, 
+			player3Action3 = true,
+			player3Action4 = true, 
+			player3Action5 = true, 
+			player3Action6 = true, 
+			player3Action7 = true, 
+			player3Action8 = true;
+
+	public boolean p4 = false;
+	public int player4Stam = 10;
+	public int player4CStam = 10;
+	public int player4Gold = 0;
+	public int player4c1Stam = 10;
+	public int player4c1CStam = 10;
+	public int player4c2Stam = 10;
+	public int player4c2CStam = 10;
+	public boolean 
+			player4Action1 = true, 
+			player4Action2 = true, 
+			player4Action3 = true,
+			player4Action4 = true, 
+			player4Action5 = true, 
+			player4Action6 = true, 
+			player4Action7 = true, 
+			player4Action8 = true;
+
+	// @formatter:on
 
 	private static ServerUI ui = new ServerUI();
 
@@ -89,8 +110,7 @@ public class Server {
 			return;
 		}
 
-		@SuppressWarnings("unused")
-		ServerGMUI gmui = new ServerGMUI();
+		gmui = new ServerGMUI(this);
 
 		ui.log("Successfully created URealms Manager server.");
 
@@ -104,7 +124,7 @@ public class Server {
 				ui.log("I/O error: " + e);
 				break;
 			}
-			new Handler(socket).start();
+			new Handler(this, socket).start();
 		}
 
 		try
@@ -118,7 +138,7 @@ public class Server {
 
 	}
 
-	public static void stamcheck()
+	public void stamcheck()
 	{
 		if (player1CStam > player1Stam)
 		{
@@ -223,7 +243,7 @@ public class Server {
 		}
 	}
 
-	public static void input(String s)
+	public void input(String s)
 	{
 		for (PrintWriter out : writers)
 		{
@@ -253,7 +273,7 @@ public class Server {
 		ServerGMUI.p4c2Stam.setText(player4c2CStam + "/" + player4c2Stam);
 	}
 
-	public static void log(String s)
+	public void log(String s)
 	{
 		ui.log(s);
 	}

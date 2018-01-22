@@ -13,7 +13,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,14 +33,16 @@ import javax.swing.JToggleButton;
 import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import client.UI;
-import javax.swing.border.MatteBorder;
 
 public class ServerGMUI {
+
+	private Server server;
 
 	private JFrame frame;
 	private JPanel contentPane;
@@ -134,39 +138,97 @@ public class ServerGMUI {
 	private JLabel dalllbl;
 	private JButton dall1, dall3, dall5;
 
-	private int YOne = 130, YTwo = 500, YOffset = 60, XOne = 10, XTwo = 420, XOffsetOne = 45, XOffsetTwo = 120;
+	private int YOne = 130, YTwo = 500, YOffset = 60, XOne = 10, XTwo = 420, XOffsetOne = 45,
+			XOffsetTwo = 120;
 
+	// @formatter:off
 	private JTextField p1Name;
 	public static JTextField p1Stam, p1Gold, p1c1Stam, p1c2Stam;
-	private JButton player1Action1 = new JButton();
-	private JButton player1Action2 = new JButton();
-	private JButton player1Action3 = new JButton();
-	private JButton player1Action4 = new JButton();
-	private JButton player1Action5 = new JButton();
+	private JButton 
+			player1Action1 = new JButton(), 
+			player1Action2 = new JButton(),
+			player1Action3 = new JButton(), 
+			player1Action4 = new JButton(),
+			player1Action5 = new JButton(),
+			player1Action6 = new JButton(),
+			player1Action7 = new JButton(),
+			player1Action8 = new JButton();
 
 	private JTextField p2Name;
 	public static JTextField p2Stam, p2Gold, p2c1Stam, p2c2Stam;
-	private JButton player2Action1 = new JButton();
-	private JButton player2Action2 = new JButton();
-	private JButton player2Action3 = new JButton();
-	private JButton player2Action4 = new JButton();
-	private JButton player2Action5 = new JButton();
+	private JButton 
+			player2Action1 = new JButton(), 
+			player2Action2 = new JButton(),
+			player2Action3 = new JButton(), 
+			player2Action4 = new JButton(),
+			player2Action5 = new JButton(),
+			player2Action6 = new JButton(),
+			player2Action7 = new JButton(),
+			player2Action8 = new JButton();
 
 	private JTextField p3Name;
 	public static JTextField p3Stam, p3Gold, p3c1Stam, p3c2Stam;
-	private JButton player3Action1 = new JButton();
-	private JButton player3Action2 = new JButton();
-	private JButton player3Action3 = new JButton();
-	private JButton player3Action4 = new JButton();
-	private JButton player3Action5 = new JButton();
+	private JButton 
+			player3Action1 = new JButton(), 
+			player3Action2 = new JButton(),
+			player3Action3 = new JButton(), 
+			player3Action4 = new JButton(),
+			player3Action5 = new JButton(),
+			player3Action6 = new JButton(),
+			player3Action7 = new JButton(),
+			player3Action8 = new JButton();
 
 	private JTextField p4Name;
 	public static JTextField p4Stam, p4Gold, p4c1Stam, p4c2Stam;
-	private JButton player4Action1 = new JButton();
-	private JButton player4Action2 = new JButton();
-	private JButton player4Action3 = new JButton();
-	private JButton player4Action4 = new JButton();
-	private JButton player4Action5 = new JButton();
+	private JButton 
+			player4Action1 = new JButton(), 
+			player4Action2 = new JButton(),
+			player4Action3 = new JButton(), 
+			player4Action4 = new JButton(),
+			player4Action5 = new JButton(),
+			player4Action6 = new JButton(),
+			player4Action7 = new JButton(),
+			player4Action8 = new JButton();
+
+	public Map<String, String> actionTypes = new HashMap<String, String>();
+	{
+		actionTypes.put("p1a1", "MOVE");
+		actionTypes.put("p1a2", "NORMAL");
+		actionTypes.put("p1a3", "ANYTIME");
+		actionTypes.put("p1a4", "ANYTIME");
+		actionTypes.put("p1a5", "ANYTIME");
+		actionTypes.put("p1a6", "ANYTIME");
+		actionTypes.put("p1a7", "ANYTIME");
+		actionTypes.put("p1a8", "ANYTIME");
+
+		actionTypes.put("p2a1", "MOVE");
+		actionTypes.put("p2a2", "NORMAL");
+		actionTypes.put("p2a3", "ANYTIME");
+		actionTypes.put("p2a4", "ANYTIME");
+		actionTypes.put("p2a5", "ANYTIME");
+		actionTypes.put("p2a6", "ANYTIME");
+		actionTypes.put("p2a7", "ANYTIME");
+		actionTypes.put("p2a8", "ANYTIME");
+
+		actionTypes.put("p3a1", "MOVE");
+		actionTypes.put("p3a2", "NORMAL");
+		actionTypes.put("p3a3", "ANYTIME");
+		actionTypes.put("p3a4", "ANYTIME");
+		actionTypes.put("p3a5", "ANYTIME");
+		actionTypes.put("p3a6", "ANYTIME");
+		actionTypes.put("p3a7", "ANYTIME");
+		actionTypes.put("p3a8", "ANYTIME");
+
+		actionTypes.put("p4a1", "MOVE");
+		actionTypes.put("p4a2", "NORMAL");
+		actionTypes.put("p4a3", "ANYTIME");
+		actionTypes.put("p4a4", "ANYTIME");
+		actionTypes.put("p4a5", "ANYTIME");
+		actionTypes.put("p4a6", "ANYTIME");
+		actionTypes.put("p4a7", "ANYTIME");
+		actionTypes.put("p4a8", "ANYTIME");
+	}
+	// @formatter:on
 
 	/**
 	 * Launch the application.
@@ -175,8 +237,9 @@ public class ServerGMUI {
 	/**
 	 * Create the frame.
 	 */
-	public ServerGMUI()
+	public ServerGMUI(Server server)
 	{
+		this.server = server;
 		EventQueue.invokeLater(new Runnable() {
 			public void run()
 			{
@@ -254,8 +317,8 @@ public class ServerGMUI {
 			{
 				JList<?> list = (JList<?>) e.getSource();
 
-				Server.input("SetPlayer1Stam " + list.getSelectedValue());
-				Server.player1Stam = Integer.valueOf((String) list.getSelectedValue());
+				server.input("SetPlayer1Stam " + list.getSelectedValue());
+				server.player1Stam = Integer.valueOf((String) list.getSelectedValue());
 			}
 		});
 		p1MaxStamSP.setViewportView(p1MaxStamL);
@@ -300,8 +363,8 @@ public class ServerGMUI {
 			public void valueChanged(ListSelectionEvent e)
 			{
 				JList<?> list = (JList<?>) e.getSource();
-				Server.input("SetPlayer2Stam " + list.getSelectedValue());
-				Server.player2Stam = Integer.valueOf((String) list.getSelectedValue());
+				server.input("SetPlayer2Stam " + list.getSelectedValue());
+				server.player2Stam = Integer.valueOf((String) list.getSelectedValue());
 			}
 		});
 		p2MaxStamSP.setViewportView(p2MaxStamL);
@@ -346,8 +409,8 @@ public class ServerGMUI {
 			public void valueChanged(ListSelectionEvent e)
 			{
 				JList<?> list = (JList<?>) e.getSource();
-				Server.input("SetPlayer3Stam " + list.getSelectedValue());
-				Server.player3Stam = Integer.valueOf((String) list.getSelectedValue());
+				server.input("SetPlayer3Stam " + list.getSelectedValue());
+				server.player3Stam = Integer.valueOf((String) list.getSelectedValue());
 			}
 		});
 		p3MaxStamSP.setViewportView(p3MaxStamL);
@@ -392,19 +455,20 @@ public class ServerGMUI {
 			public void valueChanged(ListSelectionEvent e)
 			{
 				JList<?> list = (JList<?>) e.getSource();
-				Server.input("SetPlayer4Stam " + list.getSelectedValue());
-				Server.player4Stam = Integer.valueOf((String) list.getSelectedValue());
+				server.input("SetPlayer4Stam " + list.getSelectedValue());
+				server.player4Stam = Integer.valueOf((String) list.getSelectedValue());
 			}
 		});
 		p4MaxStamSP.setViewportView(p4MaxStamL);
 
 		JMenu actionsTab = new JMenu("Player Actions");
-		actionsTab.setEnabled(false);
+		// actionsTab.setEnabled(false);
 		settingsTab.add(actionsTab);
 
 		JMenu actionsP1 = new JMenu("Player 1");
-		actionsP1.setEnabled(false);
+		// actionsP1.setEnabled(false);
 		actionsTab.add(actionsP1);
+		actionsTab(actionsP1, 1);
 
 		JMenu actionsP2 = new JMenu("Player 2");
 		actionsP2.setEnabled(false);
@@ -468,12 +532,12 @@ public class ServerGMUI {
 			{
 				if (p1.isSelected())
 				{
-					Server.input("EnablePlayer1");
-					Server.p1 = true;
+					server.input("EnablePlayer1");
+					server.p1 = true;
 				} else
 				{
-					Server.input("DisablePlayer1");
-					Server.p1 = false;
+					server.input("DisablePlayer1");
+					server.p1 = false;
 				}
 			}
 		});
@@ -493,12 +557,12 @@ public class ServerGMUI {
 			{
 				if (p2.isSelected())
 				{
-					Server.input("EnablePlayer2");
-					Server.p2 = true;
+					server.input("EnablePlayer2");
+					server.p2 = true;
 				} else
 				{
-					Server.input("DisablePlayer2");
-					Server.p2 = false;
+					server.input("DisablePlayer2");
+					server.p2 = false;
 				}
 			}
 		});
@@ -518,12 +582,12 @@ public class ServerGMUI {
 			{
 				if (p3.isSelected())
 				{
-					Server.input("EnablePlayer3");
-					Server.p3 = true;
+					server.input("EnablePlayer3");
+					server.p3 = true;
 				} else
 				{
-					Server.input("DisablePlayer3");
-					Server.p3 = false;
+					server.input("DisablePlayer3");
+					server.p3 = false;
 				}
 			}
 		});
@@ -543,12 +607,12 @@ public class ServerGMUI {
 			{
 				if (p4.isSelected())
 				{
-					Server.input("EnablePlayer4");
-					Server.p4 = true;
+					server.input("EnablePlayer4");
+					server.p4 = true;
 				} else
 				{
-					Server.input("DisablePlayer4");
-					Server.p4 = false;
+					server.input("DisablePlayer4");
+					server.p4 = false;
 				}
 			}
 		});
@@ -566,11 +630,11 @@ public class ServerGMUI {
 			@Override
 			public void actionPerformed(ActionEvent paramActionEvent)
 			{
-				Server.player1CStam = Server.player1Stam;
-				Server.player2CStam = Server.player2Stam;
-				Server.player3CStam = Server.player3Stam;
-				Server.player4CStam = Server.player4Stam;
-				Server.input("HealAll");
+				server.player1CStam = server.player1Stam;
+				server.player2CStam = server.player2Stam;
+				server.player3CStam = server.player3Stam;
+				server.player4CStam = server.player4Stam;
+				server.input("HealAll");
 			}
 		});
 
@@ -582,16 +646,16 @@ public class ServerGMUI {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				Server.player1Action1 = true;
-				Server.player1Action2 = true;
-				Server.player2Action1 = true;
-				Server.player2Action2 = true;
-				Server.player3Action1 = true;
-				Server.player3Action2 = true;
-				Server.player4Action1 = true;
-				Server.player4Action2 = true;
+				server.player1Action1 = true;
+				server.player1Action2 = true;
+				server.player2Action1 = true;
+				server.player2Action2 = true;
+				server.player3Action1 = true;
+				server.player3Action2 = true;
+				server.player4Action1 = true;
+				server.player4Action2 = true;
 
-				Server.input("NewRound");
+				server.input("NewRound");
 				player1Action1.setSelected(false);
 				player1Action2.setSelected(false);
 				player2Action1.setSelected(false);
@@ -634,15 +698,15 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1CStam = Server.player1CStam + 1;
-				Server.player2CStam = Server.player2CStam + 1;
-				Server.player3CStam = Server.player3CStam + 1;
-				Server.player4CStam = Server.player4CStam + 1;
+				server.player1CStam = server.player1CStam + 1;
+				server.player2CStam = server.player2CStam + 1;
+				server.player3CStam = server.player3CStam + 1;
+				server.player4CStam = server.player4CStam + 1;
 
-				Server.input("Player1Add 1");
-				Server.input("Player2Add 1");
-				Server.input("Player3Add 1");
-				Server.input("Player4Add 1");
+				server.input("Player1Add 1");
+				server.input("Player2Add 1");
+				server.input("Player3Add 1");
+				server.input("Player4Add 1");
 			}
 		});
 
@@ -667,15 +731,15 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1CStam = Server.player1CStam + 5;
-				Server.player2CStam = Server.player2CStam + 5;
-				Server.player3CStam = Server.player3CStam + 5;
-				Server.player4CStam = Server.player4CStam + 5;
+				server.player1CStam = server.player1CStam + 5;
+				server.player2CStam = server.player2CStam + 5;
+				server.player3CStam = server.player3CStam + 5;
+				server.player4CStam = server.player4CStam + 5;
 
-				Server.input("Player1Add 5");
-				Server.input("Player2Add 5");
-				Server.input("Player3Add 5");
-				Server.input("Player4Add 5");
+				server.input("Player1Add 5");
+				server.input("Player2Add 5");
+				server.input("Player3Add 5");
+				server.input("Player4Add 5");
 			}
 		});
 
@@ -700,15 +764,15 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1CStam = Server.player1CStam + 10;
-				Server.player2CStam = Server.player2CStam + 10;
-				Server.player3CStam = Server.player3CStam + 10;
-				Server.player4CStam = Server.player4CStam + 10;
+				server.player1CStam = server.player1CStam + 10;
+				server.player2CStam = server.player2CStam + 10;
+				server.player3CStam = server.player3CStam + 10;
+				server.player4CStam = server.player4CStam + 10;
 
-				Server.input("Player1Add 10");
-				Server.input("Player2Add 10");
-				Server.input("Player3Add 10");
-				Server.input("Player4Add 10");
+				server.input("Player1Add 10");
+				server.input("Player2Add 10");
+				server.input("Player3Add 10");
+				server.input("Player4Add 10");
 			}
 		});
 
@@ -733,15 +797,15 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1CStam = Server.player1CStam - 1;
-				Server.player2CStam = Server.player2CStam - 1;
-				Server.player3CStam = Server.player3CStam - 1;
-				Server.player4CStam = Server.player4CStam - 1;
+				server.player1CStam = server.player1CStam - 1;
+				server.player2CStam = server.player2CStam - 1;
+				server.player3CStam = server.player3CStam - 1;
+				server.player4CStam = server.player4CStam - 1;
 
-				Server.input("Player1Subtract 1");
-				Server.input("Player2Subtract 1");
-				Server.input("Player3Subtract 1");
-				Server.input("Player4Subtract 1");
+				server.input("Player1Subtract 1");
+				server.input("Player2Subtract 1");
+				server.input("Player3Subtract 1");
+				server.input("Player4Subtract 1");
 			}
 		});
 
@@ -766,15 +830,15 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1CStam = Server.player1CStam - 5;
-				Server.player2CStam = Server.player2CStam - 5;
-				Server.player3CStam = Server.player3CStam - 5;
-				Server.player4CStam = Server.player4CStam - 5;
+				server.player1CStam = server.player1CStam - 5;
+				server.player2CStam = server.player2CStam - 5;
+				server.player3CStam = server.player3CStam - 5;
+				server.player4CStam = server.player4CStam - 5;
 
-				Server.input("Player1Subtract 5");
-				Server.input("Player2Subtract 5");
-				Server.input("Player3Subtract 5");
-				Server.input("Player4Subtract 5");
+				server.input("Player1Subtract 5");
+				server.input("Player2Subtract 5");
+				server.input("Player3Subtract 5");
+				server.input("Player4Subtract 5");
 			}
 		});
 
@@ -799,15 +863,15 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1CStam = Server.player1CStam - 10;
-				Server.player2CStam = Server.player2CStam - 10;
-				Server.player3CStam = Server.player3CStam - 10;
-				Server.player4CStam = Server.player4CStam - 10;
+				server.player1CStam = server.player1CStam - 10;
+				server.player2CStam = server.player2CStam - 10;
+				server.player3CStam = server.player3CStam - 10;
+				server.player4CStam = server.player4CStam - 10;
 
-				Server.input("Player1Subtract 10");
-				Server.input("Player2Subtract 10");
-				Server.input("Player3Subtract 10");
-				Server.input("Player4Subtract 10");
+				server.input("Player1Subtract 10");
+				server.input("Player2Subtract 10");
+				server.input("Player3Subtract 10");
+				server.input("Player4Subtract 10");
 			}
 		});
 
@@ -837,7 +901,6 @@ public class ServerGMUI {
 		p1plus1.setSelectedIcon(new ImageIcon(ServerGMUI.class
 				.getResource("/resources/GMUI/Stamina/1+p.jpg")));
 		p1plus1.setBorderPainted(false);
-		p1plus1.setBounds(XOne, YOne, 40, 20);
 		p1plus1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
@@ -852,9 +915,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1CStam = Server.player1CStam + 1;
+				server.player1CStam = server.player1CStam + 1;
 
-				Server.input("Player1Add 1");
+				server.input("Player1Add 1");
 			}
 		});
 
@@ -865,7 +928,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/5+p.jpg")));
 		p1plus5.setContentAreaFilled(false);
 		p1plus5.setBorderPainted(false);
-		p1plus5.setBounds(XOne + XOffsetOne, YOne, 40, 20);
 		p1plus5.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
@@ -880,9 +942,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1CStam = Server.player1CStam + 5;
+				server.player1CStam = server.player1CStam + 5;
 
-				Server.input("Player1Add 5");
+				server.input("Player1Add 5");
 			}
 		});
 
@@ -893,7 +955,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/10+p.jpg")));
 		p1plus10.setContentAreaFilled(false);
 		p1plus10.setBorderPainted(false);
-		p1plus10.setBounds(XOne + (XOffsetOne * 2), YOne, 40, 20);
 		p1plus10.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
@@ -908,9 +969,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1CStam = Server.player1CStam + 10;
+				server.player1CStam = server.player1CStam + 10;
 
-				Server.input("Player1Add 10");
+				server.input("Player1Add 10");
 			}
 		});
 
@@ -921,7 +982,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/1-p.jpg")));
 		p1minus1.setContentAreaFilled(false);
 		p1minus1.setBorderPainted(false);
-		p1minus1.setBounds(XOne + (XOffsetOne * 2) + XOffsetTwo, YOne, 40, 20);
 		p1minus1.addActionListener(new ActionListener() {
 
 			@Override
@@ -937,9 +997,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1CStam = Server.player1CStam - 1;
+				server.player1CStam = server.player1CStam - 1;
 
-				Server.input("Player1Subtract 1");
+				server.input("Player1Subtract 1");
 			}
 		});
 
@@ -950,7 +1010,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/5-p.jpg")));
 		p1minus5.setContentAreaFilled(false);
 		p1minus5.setBorderPainted(false);
-		p1minus5.setBounds(XOne + (XOffsetOne * 3) + XOffsetTwo, YOne, 40, 20);
 		p1minus5.addActionListener(new ActionListener() {
 
 			@Override
@@ -966,9 +1025,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1CStam = Server.player1CStam - 5;
+				server.player1CStam = server.player1CStam - 5;
 
-				Server.input("Player1Subtract 5");
+				server.input("Player1Subtract 5");
 			}
 		});
 
@@ -979,7 +1038,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/10-p.jpg")));
 		p1minus10.setContentAreaFilled(false);
 		p1minus10.setBorderPainted(false);
-		p1minus10.setBounds(XOne + (XOffsetOne * 4) + XOffsetTwo, YOne, 40, 20);
 		p1minus10.addActionListener(new ActionListener() {
 
 			@Override
@@ -995,9 +1053,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1CStam = Server.player1CStam - 10;
+				server.player1CStam = server.player1CStam - 10;
 
-				Server.input("Player1Subtract 10");
+				server.input("Player1Subtract 10");
 			}
 		});
 
@@ -1019,7 +1077,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Gold/10+.png")));
 		p1plus10gold.setSelectedIcon(new ImageIcon(ServerGMUI.class
 				.getResource("/resources/GMUI/Gold/10+p.jpg")));
-		p1plus10gold.setBounds(XOne, YOne + YOffset, 40, 20);
 		p1plus10gold.addActionListener(new ActionListener() {
 
 			@Override
@@ -1035,8 +1092,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1Gold = Server.player1Gold + 10;
-				Server.input("AddPlayer1Gold 10");
+				server.player1Gold = server.player1Gold + 10;
+				server.input("AddPlayer1Gold 10");
 			}
 		});
 
@@ -1047,7 +1104,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Gold/100+.jpg")));
 		p1plus100gold.setContentAreaFilled(false);
 		p1plus100gold.setBorderPainted(false);
-		p1plus100gold.setBounds(XOne + XOffsetOne, YOne + YOffset, 40, 20);
 		p1plus100gold.addActionListener(new ActionListener() {
 
 			@Override
@@ -1063,8 +1119,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1Gold = Server.player1Gold + 100;
-				Server.input("AddPlayer1Gold 100");
+				server.player1Gold = server.player1Gold + 100;
+				server.input("AddPlayer1Gold 100");
 			}
 		});
 
@@ -1075,7 +1131,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Gold/500+.jpg")));
 		p1plus500gold.setContentAreaFilled(false);
 		p1plus500gold.setBorderPainted(false);
-		p1plus500gold.setBounds(XOne + (XOffsetOne * 2), YOne + YOffset, 40, 20);
 		p1plus500gold.addActionListener(new ActionListener() {
 
 			@Override
@@ -1091,8 +1146,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1Gold = Server.player1Gold + 500;
-				Server.input("AddPlayer1Gold 500");
+				server.player1Gold = server.player1Gold + 500;
+				server.input("AddPlayer1Gold 500");
 			}
 		});
 
@@ -1103,7 +1158,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Gold/10-.png")));
 		p1minus10gold.setSelectedIcon(new ImageIcon(ServerGMUI.class
 				.getResource("/resources/GMUI/Gold/10-p.jpg")));
-		p1minus10gold.setBounds(XOne + (XOffsetOne * 2) + XOffsetTwo, YOne + YOffset, 40, 20);
 		p1minus10gold.addActionListener(new ActionListener() {
 
 			@Override
@@ -1119,8 +1173,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1Gold = Server.player1Gold - 10;
-				Server.input("SubtractPlayer1Gold 10");
+				server.player1Gold = server.player1Gold - 10;
+				server.input("SubtractPlayer1Gold 10");
 			}
 		});
 
@@ -1131,7 +1185,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Gold/100-.jpg")));
 		p1minus100gold.setContentAreaFilled(false);
 		p1minus100gold.setBorderPainted(false);
-		p1minus100gold.setBounds(XOne + (XOffsetOne * 3) + XOffsetTwo, YOne + YOffset, 40, 20);
 		p1minus100gold.addActionListener(new ActionListener() {
 
 			@Override
@@ -1147,8 +1200,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1Gold = Server.player1Gold - 100;
-				Server.input("SubtractPlayer1Gold 100");
+				server.player1Gold = server.player1Gold - 100;
+				server.input("SubtractPlayer1Gold 100");
 			}
 		});
 
@@ -1159,7 +1212,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Gold/500-.jpg")));
 		p1minus500gold.setContentAreaFilled(false);
 		p1minus500gold.setBorderPainted(false);
-		p1minus500gold.setBounds(XOne + (XOffsetOne * 4) + XOffsetTwo, YOne + YOffset, 40, 20);
 		p1minus500gold.addActionListener(new ActionListener() {
 
 			@Override
@@ -1175,8 +1227,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1Gold = Server.player1Gold - 500;
-				Server.input("SubtractPlayer1Gold 500");
+				server.player1Gold = server.player1Gold - 500;
+				server.input("SubtractPlayer1Gold 500");
 			}
 		});
 
@@ -1198,7 +1250,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/1+.jpg")));
 		p1c1plus1.setBorderPainted(false);
 		p1c1plus1.setContentAreaFilled(false);
-		p1c1plus1.setBounds(XOne, YOne + (YOffset * 2), 40, 20);
 		p1c1plus1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent paramActionEvent)
 			{
@@ -1212,9 +1263,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1c1CStam = Server.player1c1CStam + 1;
+				server.player1c1CStam = server.player1c1CStam + 1;
 
-				Server.input("AddPlayer1c1Stam 1");
+				server.input("AddPlayer1c1Stam 1");
 			}
 		});
 
@@ -1225,7 +1276,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/5+p.jpg")));
 		p1c1plus5.setBorderPainted(false);
 		p1c1plus5.setContentAreaFilled(false);
-		p1c1plus5.setBounds(XOne + XOffsetOne, YOne + (YOffset * 2), 40, 20);
 		p1c1plus5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent paramActionEvent)
 			{
@@ -1239,9 +1289,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1c1CStam = Server.player1c1CStam + 5;
+				server.player1c1CStam = server.player1c1CStam + 5;
 
-				Server.input("AddPlayer1c1Stam 5");
+				server.input("AddPlayer1c1Stam 5");
 			}
 		});
 
@@ -1252,7 +1302,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/10+p.jpg")));
 		p1c1plus10.setBorderPainted(false);
 		p1c1plus10.setContentAreaFilled(false);
-		p1c1plus10.setBounds(XOne + (XOffsetOne * 2), YOne + (YOffset * 2), 40, 20);
 		p1c1plus10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent paramActionEvent)
 			{
@@ -1266,9 +1315,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1c1CStam = Server.player1c1CStam + 10;
+				server.player1c1CStam = server.player1c1CStam + 10;
 
-				Server.input("AddPlayer1c1Stam 10");
+				server.input("AddPlayer1c1Stam 10");
 			}
 		});
 
@@ -1279,7 +1328,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/1-p.jpg")));
 		p1c1minus1.setBorderPainted(false);
 		p1c1minus1.setContentAreaFilled(false);
-		p1c1minus1.setBounds(XOne + (XOffsetOne * 2) + XOffsetTwo, YOne + (YOffset * 2), 40, 20);
 		p1c1minus1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent paramActionEvent)
 			{
@@ -1293,9 +1341,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1c1CStam = Server.player1c1CStam - 1;
+				server.player1c1CStam = server.player1c1CStam - 1;
 
-				Server.input("SubtractPlayer1c1Stam 1");
+				server.input("SubtractPlayer1c1Stam 1");
 			}
 		});
 
@@ -1306,7 +1354,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/5-p.jpg")));
 		p1c1minus5.setBorderPainted(false);
 		p1c1minus5.setContentAreaFilled(false);
-		p1c1minus5.setBounds(XOne + (XOffsetOne * 3) + XOffsetTwo, YOne + (YOffset * 2), 40, 20);
 		p1c1minus5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent paramActionEvent)
 			{
@@ -1320,9 +1367,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1c1CStam = Server.player1c1CStam - 5;
+				server.player1c1CStam = server.player1c1CStam - 5;
 
-				Server.input("SubtractPlayer1c1Stam 5");
+				server.input("SubtractPlayer1c1Stam 5");
 			}
 		});
 
@@ -1333,7 +1380,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/10-p.jpg")));
 		p1c1minus10.setBorderPainted(false);
 		p1c1minus10.setContentAreaFilled(false);
-		p1c1minus10.setBounds(XOne + (XOffsetOne * 4) + XOffsetTwo, YOne + (YOffset * 2), 40, 20);
 		p1c1minus10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent paramActionEvent)
 			{
@@ -1347,9 +1393,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1c1CStam = Server.player1c1CStam - 10;
+				server.player1c1CStam = server.player1c1CStam - 10;
 
-				Server.input("SubtractPlayer1c1Stam 10");
+				server.input("SubtractPlayer1c1Stam 10");
 			}
 		});
 
@@ -1371,7 +1417,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/1+.jpg")));
 		p1c2plus1.setBorderPainted(false);
 		p1c2plus1.setContentAreaFilled(false);
-		p1c2plus1.setBounds(10, 310, 40, 20);
 		p1c2plus1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent paramActionEvent)
 			{
@@ -1385,9 +1430,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1c2CStam = Server.player1c2CStam + 1;
+				server.player1c2CStam = server.player1c2CStam + 1;
 
-				Server.input("AddPlayer1c2Stam 1");
+				server.input("AddPlayer1c2Stam 1");
 			}
 		});
 
@@ -1398,7 +1443,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/5+p.jpg")));
 		p1c2plus5.setBorderPainted(false);
 		p1c2plus5.setContentAreaFilled(false);
-		p1c2plus5.setBounds(55, 310, 40, 20);
 		p1c2plus5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent paramActionEvent)
 			{
@@ -1412,9 +1456,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1c2CStam = Server.player1c2CStam + 5;
+				server.player1c2CStam = server.player1c2CStam + 5;
 
-				Server.input("AddPlayer1c2Stam 5");
+				server.input("AddPlayer1c2Stam 5");
 			}
 		});
 
@@ -1425,7 +1469,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/10+p.jpg")));
 		p1c2plus10.setBorderPainted(false);
 		p1c2plus10.setContentAreaFilled(false);
-		p1c2plus10.setBounds(100, 310, 40, 20);
 		p1c2plus10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent paramActionEvent)
 			{
@@ -1439,9 +1482,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1c2CStam = Server.player1c2CStam + 10;
+				server.player1c2CStam = server.player1c2CStam + 10;
 
-				Server.input("AddPlayer1c2Stam 10");
+				server.input("AddPlayer1c2Stam 10");
 			}
 		});
 
@@ -1452,7 +1495,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/1-p.jpg")));
 		p1c2minus1.setBorderPainted(false);
 		p1c2minus1.setContentAreaFilled(false);
-		p1c2minus1.setBounds(220, 310, 40, 20);
 		p1c2minus1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent paramActionEvent)
 			{
@@ -1466,9 +1508,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1c2CStam = Server.player1c2CStam - 1;
+				server.player1c2CStam = server.player1c2CStam - 1;
 
-				Server.input("SubtractPlayer1c2Stam 1");
+				server.input("SubtractPlayer1c2Stam 1");
 			}
 		});
 
@@ -1479,7 +1521,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/5-p.jpg")));
 		p1c2minus5.setBorderPainted(false);
 		p1c2minus5.setContentAreaFilled(false);
-		p1c2minus5.setBounds(265, 310, 40, 20);
 		p1c2minus5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent paramActionEvent)
 			{
@@ -1493,9 +1534,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1c2CStam = Server.player1c2CStam - 5;
+				server.player1c2CStam = server.player1c2CStam - 5;
 
-				Server.input("SubtractPlayer1c2Stam 5");
+				server.input("SubtractPlayer1c2Stam 5");
 			}
 		});
 
@@ -1506,7 +1547,6 @@ public class ServerGMUI {
 				.getResource("/resources/GMUI/Stamina/10-p.jpg")));
 		p1c2minus10.setBorderPainted(false);
 		p1c2minus10.setContentAreaFilled(false);
-		p1c2minus10.setBounds(310, 310, 40, 20);
 		p1c2minus10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent paramActionEvent)
 			{
@@ -1520,9 +1560,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player1c2CStam = Server.player1c2CStam - 10;
+				server.player1c2CStam = server.player1c2CStam - 10;
 
-				Server.input("SubtractPlayer1c2Stam 10");
+				server.input("SubtractPlayer1c2Stam 10");
 			}
 		});
 
@@ -1533,7 +1573,6 @@ public class ServerGMUI {
 				Image.SCALE_SMOOTH)));
 		player1Action1.setSelectedIcon(new ImageIcon(new ImageIcon(UI.class
 				.getResource("/resources/UI/null.png")).getImage()));
-		player1Action1.setBounds(0, 340, 60, 60);
 		player1Action1.addActionListener(new ActionListener() {
 
 			@Override
@@ -1542,13 +1581,13 @@ public class ServerGMUI {
 				if (player1Action1.isSelected())
 				{
 					player1Action1.setSelected(false);
-					Server.player1Action1 = true;
-					Server.input("AddPlayer1Action1");
+					server.player1Action1 = true;
+					server.input("AddPlayer1Action1");
 				} else
 				{
 					player1Action1.setSelected(true);
-					Server.player1Action1 = false;
-					Server.input("RemovePlayer1Action1");
+					server.player1Action1 = false;
+					server.input("RemovePlayer1Action1");
 				}
 			}
 		});
@@ -1558,7 +1597,6 @@ public class ServerGMUI {
 		slotPlayer1Action1.setIcon(new ImageIcon(new ImageIcon(UI.class
 				.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(60, 60,
 				Image.SCALE_SMOOTH)));
-		slotPlayer1Action1.setBounds(0, 340, 60, 60);
 		contentPane.add(lblEP);
 		contentPane.add(ha);
 		contentPane.add(nr);
@@ -1613,7 +1651,6 @@ public class ServerGMUI {
 				Image.SCALE_SMOOTH)));
 		player1Action2.setSelectedIcon(new ImageIcon(new ImageIcon(UI.class
 				.getResource("/resources/UI/null.png")).getImage()));
-		player1Action2.setBounds(45, 340, 60, 60);
 		contentPane.add(player1Action2);
 		player1Action2.addActionListener(new ActionListener() {
 
@@ -1623,13 +1660,13 @@ public class ServerGMUI {
 				if (player1Action2.isSelected())
 				{
 					player1Action2.setSelected(false);
-					Server.player1Action2 = true;
-					Server.input("AddPlayer1Action2");
+					server.player1Action2 = true;
+					server.input("AddPlayer1Action2");
 				} else
 				{
 					player1Action2.setSelected(true);
-					Server.player1Action2 = false;
-					Server.input("RemovePlayer1Action2");
+					server.player1Action2 = false;
+					server.input("RemovePlayer1Action2");
 				}
 			}
 		});
@@ -1639,7 +1676,6 @@ public class ServerGMUI {
 		slotPlayer1Action2.setIcon(new ImageIcon(new ImageIcon(UI.class
 				.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(60, 60,
 				Image.SCALE_SMOOTH)));
-		slotPlayer1Action2.setBounds(45, 340, 60, 60);
 		contentPane.add(slotPlayer1Action2);
 
 		player1Action3.setBorder(null);
@@ -1649,7 +1685,6 @@ public class ServerGMUI {
 				Image.SCALE_SMOOTH)));
 		player1Action3.setSelectedIcon(new ImageIcon(new ImageIcon(UI.class
 				.getResource("/resources/UI/null.png")).getImage()));
-		player1Action3.setBounds(90, 340, 60, 60);
 		contentPane.add(player1Action3);
 		player1Action3.addActionListener(new ActionListener() {
 
@@ -1659,13 +1694,13 @@ public class ServerGMUI {
 				if (player1Action3.isSelected())
 				{
 					player1Action3.setSelected(false);
-					Server.player1Action3 = true;
-					Server.input("AddPlayer1Action3");
+					server.player1Action3 = true;
+					server.input("AddPlayer1Action3");
 				} else
 				{
 					player1Action3.setSelected(true);
-					Server.player1Action3 = false;
-					Server.input("RemovePlayer1Action3");
+					server.player1Action3 = false;
+					server.input("RemovePlayer1Action3");
 				}
 			}
 		});
@@ -1675,7 +1710,6 @@ public class ServerGMUI {
 		slotPlayer1Action3.setIcon(new ImageIcon(new ImageIcon(UI.class
 				.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(60, 60,
 				Image.SCALE_SMOOTH)));
-		slotPlayer1Action3.setBounds(90, 340, 60, 60);
 		contentPane.add(slotPlayer1Action3);
 
 		player1Action4.setBorder(null);
@@ -1685,7 +1719,6 @@ public class ServerGMUI {
 				Image.SCALE_SMOOTH)));
 		player1Action4.setSelectedIcon(new ImageIcon(new ImageIcon(UI.class
 				.getResource("/resources/UI/null.png")).getImage()));
-		player1Action4.setBounds(150, 340, 60, 60);
 		contentPane.add(player1Action4);
 		player1Action4.addActionListener(new ActionListener() {
 
@@ -1695,13 +1728,13 @@ public class ServerGMUI {
 				if (player1Action4.isSelected())
 				{
 					player1Action4.setSelected(false);
-					Server.player1Action4 = true;
-					Server.input("AddPlayer1Action4");
+					server.player1Action4 = true;
+					server.input("AddPlayer1Action4");
 				} else
 				{
 					player1Action4.setSelected(true);
-					Server.player1Action4 = false;
-					Server.input("RemovePlayer1Action4");
+					server.player1Action4 = false;
+					server.input("RemovePlayer1Action4");
 				}
 			}
 		});
@@ -1711,7 +1744,6 @@ public class ServerGMUI {
 		slotPlayer1Action4.setIcon(new ImageIcon(new ImageIcon(UI.class
 				.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(60, 60,
 				Image.SCALE_SMOOTH)));
-		slotPlayer1Action4.setBounds(150, 340, 60, 60);
 		contentPane.add(slotPlayer1Action4);
 
 		player1Action5.setBorder(null);
@@ -1721,7 +1753,6 @@ public class ServerGMUI {
 				Image.SCALE_SMOOTH)));
 		player1Action5.setSelectedIcon(new ImageIcon(new ImageIcon(UI.class
 				.getResource("/resources/UI/null.png")).getImage()));
-		player1Action5.setBounds(210, 340, 60, 60);
 		contentPane.add(player1Action5);
 		player1Action5.addActionListener(new ActionListener() {
 
@@ -1731,13 +1762,13 @@ public class ServerGMUI {
 				if (player1Action5.isSelected())
 				{
 					player1Action5.setSelected(false);
-					Server.player1Action5 = true;
-					Server.input("AddPlayer1Action5");
+					server.player1Action5 = true;
+					server.input("AddPlayer1Action5");
 				} else
 				{
 					player1Action5.setSelected(true);
-					Server.player1Action5 = false;
-					Server.input("RemovePlayer1Action5");
+					server.player1Action5 = false;
+					server.input("RemovePlayer1Action5");
 				}
 			}
 		});
@@ -1747,37 +1778,108 @@ public class ServerGMUI {
 		slotPlayer1Action5.setIcon(new ImageIcon(new ImageIcon(UI.class
 				.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(60, 60,
 				Image.SCALE_SMOOTH)));
-		slotPlayer1Action5.setBounds(210, 340, 60, 60);
 		contentPane.add(slotPlayer1Action5);
 
+		player1Action6.setBorder(null);
+		player1Action6.setContentAreaFilled(false);
+		player1Action6.setIcon(new ImageIcon(new ImageIcon(UI.class
+				.getResource("/resources/UI/anytime.png")).getImage().getScaledInstance(60, 60,
+				Image.SCALE_SMOOTH)));
+		player1Action6.setSelectedIcon(new ImageIcon(new ImageIcon(UI.class
+				.getResource("/resources/UI/null.png")).getImage()));
+		contentPane.add(player1Action6);
+		player1Action6.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				if (player1Action6.isSelected())
+				{
+					player1Action6.setSelected(false);
+					server.player1Action6 = true;
+					server.input("AddPlayer1Action6");
+				} else
+				{
+					player1Action6.setSelected(true);
+					server.player1Action6 = false;
+					server.input("RemovePlayer1Action6");
+				}
+			}
+		});
+
 		JLabel slotPlayer1Action6 = new JLabel();
-		slotPlayer1Action6.setEnabled(false);
-		slotPlayer1Action6.setVisible(false);
 		slotPlayer1Action6.setBorder(null);
 		slotPlayer1Action6.setIcon(new ImageIcon(new ImageIcon(UI.class
 				.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(60, 60,
 				Image.SCALE_SMOOTH)));
-		slotPlayer1Action6.setBounds(255, 340, 60, 60);
 		contentPane.add(slotPlayer1Action6);
 
+		player1Action7.setBorder(null);
+		player1Action7.setContentAreaFilled(false);
+		player1Action7.setIcon(new ImageIcon(new ImageIcon(UI.class
+				.getResource("/resources/UI/anytime.png")).getImage().getScaledInstance(60, 60,
+				Image.SCALE_SMOOTH)));
+		player1Action7.setSelectedIcon(new ImageIcon(new ImageIcon(UI.class
+				.getResource("/resources/UI/null.png")).getImage()));
+		contentPane.add(player1Action7);
+		player1Action7.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				if (player1Action7.isSelected())
+				{
+					player1Action7.setSelected(false);
+					server.player1Action7 = true;
+					server.input("AddPlayer1Action7");
+				} else
+				{
+					player1Action7.setSelected(true);
+					server.player1Action7 = false;
+					server.input("RemovePlayer1Action7");
+				}
+			}
+		});
+
 		JLabel slotPlayer1Action7 = new JLabel();
-		slotPlayer1Action7.setVisible(false);
-		slotPlayer1Action7.setEnabled(false);
 		slotPlayer1Action7.setBorder(null);
 		slotPlayer1Action7.setIcon(new ImageIcon(new ImageIcon(UI.class
 				.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(60, 60,
 				Image.SCALE_SMOOTH)));
-		slotPlayer1Action7.setBounds(300, 340, 60, 60);
 		contentPane.add(slotPlayer1Action7);
 
+		player1Action8.setBorder(null);
+		player1Action8.setContentAreaFilled(false);
+		player1Action8.setIcon(new ImageIcon(new ImageIcon(UI.class
+				.getResource("/resources/UI/anytime.png")).getImage().getScaledInstance(60, 60,
+				Image.SCALE_SMOOTH)));
+		player1Action8.setSelectedIcon(new ImageIcon(new ImageIcon(UI.class
+				.getResource("/resources/UI/null.png")).getImage()));
+		contentPane.add(player1Action8);
+		player1Action8.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				if (player1Action8.isSelected())
+				{
+					player1Action8.setSelected(false);
+					server.player1Action8 = true;
+					server.input("AddPlayer1Action8");
+				} else
+				{
+					player1Action8.setSelected(true);
+					server.player1Action8 = false;
+					server.input("RemovePlayer1Action8");
+				}
+			}
+		});
+
 		JLabel slotPlayer1Action8 = new JLabel();
-		slotPlayer1Action8.setEnabled(false);
-		slotPlayer1Action8.setVisible(false);
 		slotPlayer1Action8.setBorder(null);
 		slotPlayer1Action8.setIcon(new ImageIcon(new ImageIcon(UI.class
 				.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(60, 60,
 				Image.SCALE_SMOOTH)));
-		slotPlayer1Action8.setBounds(150, 380, 60, 60);
 		contentPane.add(slotPlayer1Action8);
 
 		JLabel lblP2 = new JLabel("Player 2 Options");
@@ -1822,9 +1924,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2CStam = Server.player2CStam + 1;
+				server.player2CStam = server.player2CStam + 1;
 
-				Server.input("Player2Add 1");
+				server.input("Player2Add 1");
 			}
 		});
 
@@ -1852,9 +1954,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2CStam = Server.player2CStam - 1;
+				server.player2CStam = server.player2CStam - 1;
 
-				Server.input("Player2Subtract 1");
+				server.input("Player2Subtract 1");
 			}
 		});
 
@@ -1881,9 +1983,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2CStam = Server.player2CStam + 5;
+				server.player2CStam = server.player2CStam + 5;
 
-				Server.input("Player2Add 5");
+				server.input("Player2Add 5");
 			}
 		});
 
@@ -1911,9 +2013,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2CStam = Server.player2CStam - 5;
+				server.player2CStam = server.player2CStam - 5;
 
-				Server.input("Player2Subtract 5");
+				server.input("Player2Subtract 5");
 			}
 		});
 
@@ -1940,9 +2042,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2CStam = Server.player2CStam + 10;
+				server.player2CStam = server.player2CStam + 10;
 
-				Server.input("Player2Add 10");
+				server.input("Player2Add 10");
 			}
 		});
 
@@ -1970,9 +2072,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2CStam = Server.player2CStam - 10;
+				server.player2CStam = server.player2CStam - 10;
 
-				Server.input("Player2Subtract 10");
+				server.input("Player2Subtract 10");
 			}
 		});
 
@@ -2013,8 +2115,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2Gold = Server.player2Gold + 10;
-				Server.input("AddPlayer2Gold 10");
+				server.player2Gold = server.player2Gold + 10;
+				server.input("AddPlayer2Gold 10");
 			}
 		});
 
@@ -2042,8 +2144,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2Gold = Server.player2Gold - 10;
-				Server.input("SubtractPlayer2Gold 10");
+				server.player2Gold = server.player2Gold - 10;
+				server.input("SubtractPlayer2Gold 10");
 			}
 		});
 
@@ -2072,8 +2174,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2Gold = Server.player2Gold + 100;
-				Server.input("AddPlayer2Gold 100");
+				server.player2Gold = server.player2Gold + 100;
+				server.input("AddPlayer2Gold 100");
 			}
 		});
 
@@ -2101,8 +2203,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2Gold = Server.player2Gold - 100;
-				Server.input("SubtractPlayer2Gold 100");
+				server.player2Gold = server.player2Gold - 100;
+				server.input("SubtractPlayer2Gold 100");
 			}
 		});
 
@@ -2130,8 +2232,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2Gold = Server.player2Gold + 500;
-				Server.input("AddPlayer2Gold 500");
+				server.player2Gold = server.player2Gold + 500;
+				server.input("AddPlayer2Gold 500");
 			}
 		});
 
@@ -2159,8 +2261,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2Gold = Server.player2Gold - 500;
-				Server.input("SubtractPlayer2Gold 500");
+				server.player2Gold = server.player2Gold - 500;
+				server.input("SubtractPlayer2Gold 500");
 			}
 		});
 
@@ -2199,9 +2301,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2c1CStam = Server.player2c1CStam + 1;
+				server.player2c1CStam = server.player2c1CStam + 1;
 
-				Server.input("AddPlayer2c1Stam 1");
+				server.input("AddPlayer2c1Stam 1");
 			}
 		});
 
@@ -2227,9 +2329,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2c1CStam = Server.player2c1CStam + 5;
+				server.player2c1CStam = server.player2c1CStam + 5;
 
-				Server.input("AddPlayer2c1Stam 5");
+				server.input("AddPlayer2c1Stam 5");
 			}
 		});
 
@@ -2255,9 +2357,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2c1CStam = Server.player2c1CStam + 10;
+				server.player2c1CStam = server.player2c1CStam + 10;
 
-				Server.input("AddPlayer2c1Stam 10");
+				server.input("AddPlayer2c1Stam 10");
 			}
 		});
 
@@ -2283,9 +2385,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2c1CStam = Server.player2c1CStam - 1;
+				server.player2c1CStam = server.player2c1CStam - 1;
 
-				Server.input("SubtractPlayer2c1Stam 1");
+				server.input("SubtractPlayer2c1Stam 1");
 			}
 		});
 
@@ -2311,9 +2413,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2c1CStam = Server.player2c1CStam - 5;
+				server.player2c1CStam = server.player2c1CStam - 5;
 
-				Server.input("SubtractPlayer2c1Stam 5");
+				server.input("SubtractPlayer2c1Stam 5");
 			}
 		});
 
@@ -2339,9 +2441,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2c1CStam = Server.player2c1CStam - 10;
+				server.player2c1CStam = server.player2c1CStam - 10;
 
-				Server.input("SubtractPlayer2c1Stam 10");
+				server.input("SubtractPlayer2c1Stam 10");
 			}
 		});
 
@@ -2380,9 +2482,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2c2CStam = Server.player2c2CStam + 1;
+				server.player2c2CStam = server.player2c2CStam + 1;
 
-				Server.input("AddPlayer2c2Stam 1");
+				server.input("AddPlayer2c2Stam 1");
 			}
 		});
 
@@ -2408,9 +2510,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2c2CStam = Server.player2c2CStam + 5;
+				server.player2c2CStam = server.player2c2CStam + 5;
 
-				Server.input("AddPlayer2c2Stam 5");
+				server.input("AddPlayer2c2Stam 5");
 			}
 		});
 
@@ -2436,9 +2538,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2c2CStam = Server.player2c2CStam + 10;
+				server.player2c2CStam = server.player2c2CStam + 10;
 
-				Server.input("AddPlayer2c2Stam 10");
+				server.input("AddPlayer2c2Stam 10");
 			}
 		});
 
@@ -2464,9 +2566,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2c2CStam = Server.player2c2CStam - 1;
+				server.player2c2CStam = server.player2c2CStam - 1;
 
-				Server.input("SubtractPlayer2c2Stam 1");
+				server.input("SubtractPlayer2c2Stam 1");
 			}
 		});
 
@@ -2492,9 +2594,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2c2CStam = Server.player2c2CStam - 5;
+				server.player2c2CStam = server.player2c2CStam - 5;
 
-				Server.input("SubtractPlayer2c2Stam 5");
+				server.input("SubtractPlayer2c2Stam 5");
 			}
 		});
 
@@ -2520,9 +2622,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player2c2CStam = Server.player2c2CStam - 10;
+				server.player2c2CStam = server.player2c2CStam - 10;
 
-				Server.input("SubtractPlayer2c2Stam 10");
+				server.input("SubtractPlayer2c2Stam 10");
 			}
 		});
 
@@ -2543,13 +2645,13 @@ public class ServerGMUI {
 				if (player2Action1.isSelected())
 				{
 					player2Action1.setSelected(false);
-					Server.player2Action1 = true;
-					Server.input("AddPlayer2Action1");
+					server.player2Action1 = true;
+					server.input("AddPlayer2Action1");
 				} else
 				{
 					player2Action1.setSelected(true);
-					Server.player2Action1 = false;
-					Server.input("RemovePlayer2Action1");
+					server.player2Action1 = false;
+					server.input("RemovePlayer2Action1");
 				}
 			}
 		});
@@ -2579,13 +2681,13 @@ public class ServerGMUI {
 				if (player2Action2.isSelected())
 				{
 					player2Action2.setSelected(false);
-					Server.player2Action2 = true;
-					Server.input("AddPlayer2Action2");
+					server.player2Action2 = true;
+					server.input("AddPlayer2Action2");
 				} else
 				{
 					player2Action2.setSelected(true);
-					Server.player2Action2 = false;
-					Server.input("RemovePlayer2Action2");
+					server.player2Action2 = false;
+					server.input("RemovePlayer2Action2");
 				}
 			}
 		});
@@ -2615,13 +2717,13 @@ public class ServerGMUI {
 				if (player2Action3.isSelected())
 				{
 					player2Action3.setSelected(false);
-					Server.player2Action3 = true;
-					Server.input("AddPlayer2Action3");
+					server.player2Action3 = true;
+					server.input("AddPlayer2Action3");
 				} else
 				{
 					player2Action3.setSelected(true);
-					Server.player2Action3 = false;
-					Server.input("RemovePlayer2Action3");
+					server.player2Action3 = false;
+					server.input("RemovePlayer2Action3");
 				}
 			}
 		});
@@ -2651,13 +2753,13 @@ public class ServerGMUI {
 				if (player2Action4.isSelected())
 				{
 					player2Action4.setSelected(false);
-					Server.player2Action4 = true;
-					Server.input("AddPlayer2Action4");
+					server.player2Action4 = true;
+					server.input("AddPlayer2Action4");
 				} else
 				{
 					player2Action4.setSelected(true);
-					Server.player2Action4 = false;
-					Server.input("RemovePlayer2Action4");
+					server.player2Action4 = false;
+					server.input("RemovePlayer2Action4");
 				}
 			}
 		});
@@ -2687,13 +2789,13 @@ public class ServerGMUI {
 				if (player2Action5.isSelected())
 				{
 					player2Action5.setSelected(false);
-					Server.player2Action5 = true;
-					Server.input("AddPlayer2Action5");
+					server.player2Action5 = true;
+					server.input("AddPlayer2Action5");
 				} else
 				{
 					player2Action5.setSelected(true);
-					Server.player2Action5 = false;
-					Server.input("RemovePlayer2Action5");
+					server.player2Action5 = false;
+					server.input("RemovePlayer2Action5");
 				}
 			}
 		});
@@ -2748,9 +2850,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3CStam = Server.player3CStam + 1;
+				server.player3CStam = server.player3CStam + 1;
 
-				Server.input("Player3Add 1");
+				server.input("Player3Add 1");
 			}
 		});
 
@@ -2778,9 +2880,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3CStam = Server.player3CStam - 1;
+				server.player3CStam = server.player3CStam - 1;
 
-				Server.input("Player3Subtract 1");
+				server.input("Player3Subtract 1");
 			}
 		});
 
@@ -2808,9 +2910,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3CStam = Server.player3CStam + 5;
+				server.player3CStam = server.player3CStam + 5;
 
-				Server.input("Player3Add 5");
+				server.input("Player3Add 5");
 			}
 		});
 
@@ -2838,9 +2940,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3CStam = Server.player3CStam - 5;
+				server.player3CStam = server.player3CStam - 5;
 
-				Server.input("Player3Subtract 5");
+				server.input("Player3Subtract 5");
 			}
 		});
 
@@ -2867,9 +2969,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3CStam = Server.player3CStam + 10;
+				server.player3CStam = server.player3CStam + 10;
 
-				Server.input("Player3Add 10");
+				server.input("Player3Add 10");
 			}
 		});
 
@@ -2897,9 +2999,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3CStam = Server.player3CStam - 10;
+				server.player3CStam = server.player3CStam - 10;
 
-				Server.input("Player3Subtract 10");
+				server.input("Player3Subtract 10");
 			}
 		});
 
@@ -2940,8 +3042,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3Gold += +10;
-				Server.input("AddPlayer3Gold 10");
+				server.player3Gold += +10;
+				server.input("AddPlayer3Gold 10");
 			}
 		});
 
@@ -2969,8 +3071,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3Gold -= 10;
-				Server.input("SubtractPlayer3Gold 10");
+				server.player3Gold -= 10;
+				server.input("SubtractPlayer3Gold 10");
 			}
 		});
 
@@ -2998,8 +3100,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3Gold = Server.player3Gold + 100;
-				Server.input("AddPlayer3Gold 100");
+				server.player3Gold = server.player3Gold + 100;
+				server.input("AddPlayer3Gold 100");
 			}
 		});
 
@@ -3027,8 +3129,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3Gold = Server.player3Gold - 100;
-				Server.input("SubtractPlayer3Gold 100");
+				server.player3Gold = server.player3Gold - 100;
+				server.input("SubtractPlayer3Gold 100");
 			}
 		});
 
@@ -3056,8 +3158,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3Gold = Server.player3Gold + 500;
-				Server.input("AddPlayer3Gold 500");
+				server.player3Gold = server.player3Gold + 500;
+				server.input("AddPlayer3Gold 500");
 			}
 		});
 
@@ -3085,8 +3187,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3Gold = Server.player3Gold - 500;
-				Server.input("SubtractPlayer3Gold 500");
+				server.player3Gold = server.player3Gold - 500;
+				server.input("SubtractPlayer3Gold 500");
 			}
 		});
 
@@ -3125,9 +3227,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3c1CStam = Server.player3c1CStam + 1;
+				server.player3c1CStam = server.player3c1CStam + 1;
 
-				Server.input("AddPlayer3c1Stam 1");
+				server.input("AddPlayer3c1Stam 1");
 			}
 		});
 
@@ -3153,9 +3255,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3c1CStam = Server.player3c1CStam + 5;
+				server.player3c1CStam = server.player3c1CStam + 5;
 
-				Server.input("AddPlayer3c1Stam 5");
+				server.input("AddPlayer3c1Stam 5");
 			}
 		});
 
@@ -3181,9 +3283,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3c1CStam = Server.player3c1CStam + 10;
+				server.player3c1CStam = server.player3c1CStam + 10;
 
-				Server.input("AddPlayer3c1Stam 10");
+				server.input("AddPlayer3c1Stam 10");
 			}
 		});
 
@@ -3209,9 +3311,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3c1CStam = Server.player3c1CStam - 1;
+				server.player3c1CStam = server.player3c1CStam - 1;
 
-				Server.input("SubtractPlayer3c1Stam 1");
+				server.input("SubtractPlayer3c1Stam 1");
 			}
 		});
 
@@ -3237,9 +3339,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3c1CStam = Server.player3c1CStam - 5;
+				server.player3c1CStam = server.player3c1CStam - 5;
 
-				Server.input("SubtractPlayer3c1Stam 5");
+				server.input("SubtractPlayer3c1Stam 5");
 			}
 		});
 
@@ -3265,9 +3367,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3c1CStam = Server.player3c1CStam - 10;
+				server.player3c1CStam = server.player3c1CStam - 10;
 
-				Server.input("SubtractPlayer3c1Stam 10");
+				server.input("SubtractPlayer3c1Stam 10");
 			}
 		});
 
@@ -3306,9 +3408,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3c2CStam = Server.player3c2CStam + 1;
+				server.player3c2CStam = server.player3c2CStam + 1;
 
-				Server.input("AddPlayer3c2Stam 1");
+				server.input("AddPlayer3c2Stam 1");
 			}
 		});
 
@@ -3334,9 +3436,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3c2CStam = Server.player3c2CStam + 5;
+				server.player3c2CStam = server.player3c2CStam + 5;
 
-				Server.input("AddPlayer3c2Stam 5");
+				server.input("AddPlayer3c2Stam 5");
 			}
 		});
 
@@ -3362,9 +3464,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3c2CStam = Server.player3c2CStam + 10;
+				server.player3c2CStam = server.player3c2CStam + 10;
 
-				Server.input("AddPlayer3c2Stam 10");
+				server.input("AddPlayer3c2Stam 10");
 			}
 		});
 
@@ -3390,9 +3492,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3c2CStam = Server.player3c2CStam - 1;
+				server.player3c2CStam = server.player3c2CStam - 1;
 
-				Server.input("SubtractPlayer3c2Stam 1");
+				server.input("SubtractPlayer3c2Stam 1");
 			}
 		});
 
@@ -3418,9 +3520,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3c2CStam = Server.player3c2CStam - 5;
+				server.player3c2CStam = server.player3c2CStam - 5;
 
-				Server.input("SubtractPlayer3c2Stam 5");
+				server.input("SubtractPlayer3c2Stam 5");
 			}
 		});
 
@@ -3446,9 +3548,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player3c2CStam = Server.player3c2CStam - 10;
+				server.player3c2CStam = server.player3c2CStam - 10;
 
-				Server.input("SubtractPlayer3c2Stam 10");
+				server.input("SubtractPlayer3c2Stam 10");
 			}
 		});
 
@@ -3469,13 +3571,13 @@ public class ServerGMUI {
 				if (player3Action1.isSelected())
 				{
 					player3Action1.setSelected(false);
-					Server.player3Action1 = true;
-					Server.input("AddPlayer3Action1");
+					server.player3Action1 = true;
+					server.input("AddPlayer3Action1");
 				} else
 				{
 					player3Action1.setSelected(true);
-					Server.player3Action1 = false;
-					Server.input("RemovePlayer3Action1");
+					server.player3Action1 = false;
+					server.input("RemovePlayer3Action1");
 				}
 			}
 		});
@@ -3505,13 +3607,13 @@ public class ServerGMUI {
 				if (player3Action2.isSelected())
 				{
 					player3Action2.setSelected(false);
-					Server.player3Action2 = true;
-					Server.input("AddPlayer3Action2");
+					server.player3Action2 = true;
+					server.input("AddPlayer3Action2");
 				} else
 				{
 					player3Action2.setSelected(true);
-					Server.player3Action2 = false;
-					Server.input("RemovePlayer3Action2");
+					server.player3Action2 = false;
+					server.input("RemovePlayer3Action2");
 				}
 			}
 		});
@@ -3541,13 +3643,13 @@ public class ServerGMUI {
 				if (player3Action3.isSelected())
 				{
 					player3Action3.setSelected(false);
-					Server.player3Action3 = true;
-					Server.input("AddPlayer3Action3");
+					server.player3Action3 = true;
+					server.input("AddPlayer3Action3");
 				} else
 				{
 					player3Action3.setSelected(true);
-					Server.player3Action3 = false;
-					Server.input("RemovePlayer3Action3");
+					server.player3Action3 = false;
+					server.input("RemovePlayer3Action3");
 				}
 			}
 		});
@@ -3577,13 +3679,13 @@ public class ServerGMUI {
 				if (player3Action4.isSelected())
 				{
 					player3Action4.setSelected(false);
-					Server.player3Action4 = true;
-					Server.input("AddPlayer3Action4");
+					server.player3Action4 = true;
+					server.input("AddPlayer3Action4");
 				} else
 				{
 					player3Action4.setSelected(true);
-					Server.player3Action4 = false;
-					Server.input("RemovePlayer3Action4");
+					server.player3Action4 = false;
+					server.input("RemovePlayer3Action4");
 				}
 			}
 		});
@@ -3613,13 +3715,13 @@ public class ServerGMUI {
 				if (player3Action5.isSelected())
 				{
 					player3Action5.setSelected(false);
-					Server.player3Action5 = true;
-					Server.input("AddPlayer3Action5");
+					server.player3Action5 = true;
+					server.input("AddPlayer3Action5");
 				} else
 				{
 					player3Action5.setSelected(true);
-					Server.player3Action5 = false;
-					Server.input("RemovePlayer3Action5");
+					server.player3Action5 = false;
+					server.input("RemovePlayer3Action5");
 				}
 			}
 		});
@@ -3674,9 +3776,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4CStam = Server.player4CStam + 1;
+				server.player4CStam = server.player4CStam + 1;
 
-				Server.input("Player4Add 1");
+				server.input("Player4Add 1");
 			}
 		});
 
@@ -3704,9 +3806,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4CStam = Server.player4CStam - 1;
+				server.player4CStam = server.player4CStam - 1;
 
-				Server.input("Player4Subtract 1");
+				server.input("Player4Subtract 1");
 			}
 		});
 
@@ -3733,9 +3835,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4CStam = Server.player4CStam + 5;
+				server.player4CStam = server.player4CStam + 5;
 
-				Server.input("Player4Add 5");
+				server.input("Player4Add 5");
 			}
 		});
 
@@ -3763,9 +3865,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4CStam = Server.player4CStam - 5;
+				server.player4CStam = server.player4CStam - 5;
 
-				Server.input("Player4Subtract 5");
+				server.input("Player4Subtract 5");
 			}
 		});
 
@@ -3792,9 +3894,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4CStam = Server.player4CStam + 10;
+				server.player4CStam = server.player4CStam + 10;
 
-				Server.input("Player4Add 10");
+				server.input("Player4Add 10");
 			}
 		});
 
@@ -3822,9 +3924,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4CStam = Server.player4CStam - 10;
+				server.player4CStam = server.player4CStam - 10;
 
-				Server.input("Player4Subtract 10");
+				server.input("Player4Subtract 10");
 			}
 		});
 
@@ -3865,8 +3967,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4Gold = Server.player4Gold + 10;
-				Server.input("AddPlayer4Gold 10");
+				server.player4Gold = server.player4Gold + 10;
+				server.input("AddPlayer4Gold 10");
 			}
 		});
 
@@ -3894,8 +3996,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4Gold = Server.player4Gold - 10;
-				Server.input("SubtractPlayer4Gold 10");
+				server.player4Gold = server.player4Gold - 10;
+				server.input("SubtractPlayer4Gold 10");
 			}
 		});
 
@@ -3923,8 +4025,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4Gold = Server.player4Gold + 100;
-				Server.input("AddPlayer4Gold 100");
+				server.player4Gold = server.player4Gold + 100;
+				server.input("AddPlayer4Gold 100");
 			}
 		});
 
@@ -3952,8 +4054,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4Gold = Server.player4Gold - 100;
-				Server.input("SubtractPlayer4Gold 100");
+				server.player4Gold = server.player4Gold - 100;
+				server.input("SubtractPlayer4Gold 100");
 			}
 		});
 
@@ -3981,8 +4083,8 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4Gold = Server.player4Gold + 500;
-				Server.input("AddPlayer4Gold 500");
+				server.player4Gold = server.player4Gold + 500;
+				server.input("AddPlayer4Gold 500");
 			}
 		});
 
@@ -4009,8 +4111,8 @@ public class ServerGMUI {
 						p4minus500gold.setSelected(false);
 					}
 				}, 100L);
-				Server.player4Gold = Server.player4Gold - 500;
-				Server.input("SubtractPlayer4Gold 500");
+				server.player4Gold = server.player4Gold - 500;
+				server.input("SubtractPlayer4Gold 500");
 			}
 		});
 
@@ -4049,9 +4151,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4c1CStam = Server.player4c1CStam + 1;
+				server.player4c1CStam = server.player4c1CStam + 1;
 
-				Server.input("AddPlayer4c1Stam 1");
+				server.input("AddPlayer4c1Stam 1");
 			}
 		});
 
@@ -4077,9 +4179,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4c1CStam = Server.player4c1CStam + 5;
+				server.player4c1CStam = server.player4c1CStam + 5;
 
-				Server.input("AddPlayer4c1Stam 5");
+				server.input("AddPlayer4c1Stam 5");
 			}
 		});
 
@@ -4105,9 +4207,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4c1CStam = Server.player4c1CStam + 10;
+				server.player4c1CStam = server.player4c1CStam + 10;
 
-				Server.input("AddPlayer4c1Stam 10");
+				server.input("AddPlayer4c1Stam 10");
 			}
 		});
 
@@ -4133,9 +4235,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4c1CStam = Server.player4c1CStam - 1;
+				server.player4c1CStam = server.player4c1CStam - 1;
 
-				Server.input("SubtractPlayer4c1Stam 1");
+				server.input("SubtractPlayer4c1Stam 1");
 			}
 		});
 
@@ -4161,9 +4263,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4c1CStam = Server.player4c1CStam - 5;
+				server.player4c1CStam = server.player4c1CStam - 5;
 
-				Server.input("SubtractPlayer4c1Stam 5");
+				server.input("SubtractPlayer4c1Stam 5");
 			}
 		});
 
@@ -4189,9 +4291,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4c1CStam = Server.player4c1CStam - 10;
+				server.player4c1CStam = server.player4c1CStam - 10;
 
-				Server.input("SubtractPlayer4c1Stam 10");
+				server.input("SubtractPlayer4c1Stam 10");
 			}
 		});
 
@@ -4230,9 +4332,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4c2CStam = Server.player4c2CStam + 1;
+				server.player4c2CStam = server.player4c2CStam + 1;
 
-				Server.input("AddPlayer4c2Stam 1");
+				server.input("AddPlayer4c2Stam 1");
 			}
 		});
 
@@ -4258,9 +4360,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4c2CStam = Server.player4c2CStam + 5;
+				server.player4c2CStam = server.player4c2CStam + 5;
 
-				Server.input("AddPlayer4c2Stam 5");
+				server.input("AddPlayer4c2Stam 5");
 			}
 		});
 
@@ -4286,9 +4388,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4c2CStam = Server.player4c2CStam + 10;
+				server.player4c2CStam = server.player4c2CStam + 10;
 
-				Server.input("AddPlayer4c2Stam 10");
+				server.input("AddPlayer4c2Stam 10");
 			}
 		});
 
@@ -4314,9 +4416,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4c2CStam = Server.player4c2CStam - 1;
+				server.player4c2CStam = server.player4c2CStam - 1;
 
-				Server.input("SubtractPlayer4c2Stam 1");
+				server.input("SubtractPlayer4c2Stam 1");
 			}
 		});
 
@@ -4342,9 +4444,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4c2CStam = Server.player4c2CStam - 5;
+				server.player4c2CStam = server.player4c2CStam - 5;
 
-				Server.input("SubtractPlayer4c2Stam 5");
+				server.input("SubtractPlayer4c2Stam 5");
 			}
 		});
 
@@ -4370,9 +4472,9 @@ public class ServerGMUI {
 					}
 				}, 100L);
 
-				Server.player4c2CStam = Server.player4c2CStam - 10;
+				server.player4c2CStam = server.player4c2CStam - 10;
 
-				Server.input("SubtractPlayer4c2Stam 10");
+				server.input("SubtractPlayer4c2Stam 10");
 			}
 		});
 
@@ -4393,13 +4495,13 @@ public class ServerGMUI {
 				if (player4Action1.isSelected())
 				{
 					player4Action1.setSelected(false);
-					Server.player4Action1 = true;
-					Server.input("AddPlayer4Action1");
+					server.player4Action1 = true;
+					server.input("AddPlayer4Action1");
 				} else
 				{
 					player4Action1.setSelected(true);
-					Server.player4Action1 = false;
-					Server.input("RemovePlayer4Action1");
+					server.player4Action1 = false;
+					server.input("RemovePlayer4Action1");
 				}
 			}
 		});
@@ -4429,13 +4531,13 @@ public class ServerGMUI {
 				if (player4Action2.isSelected())
 				{
 					player4Action2.setSelected(false);
-					Server.player4Action2 = true;
-					Server.input("AddPlayer4Action2");
+					server.player4Action2 = true;
+					server.input("AddPlayer4Action2");
 				} else
 				{
 					player4Action2.setSelected(true);
-					Server.player4Action2 = false;
-					Server.input("RemovePlayer4Action2");
+					server.player4Action2 = false;
+					server.input("RemovePlayer4Action2");
 				}
 			}
 		});
@@ -4465,13 +4567,13 @@ public class ServerGMUI {
 				if (player4Action3.isSelected())
 				{
 					player4Action3.setSelected(false);
-					Server.player4Action3 = true;
-					Server.input("AddPlayer4Action3");
+					server.player4Action3 = true;
+					server.input("AddPlayer4Action3");
 				} else
 				{
 					player4Action3.setSelected(true);
-					Server.player4Action3 = false;
-					Server.input("RemovePlayer4Action3");
+					server.player4Action3 = false;
+					server.input("RemovePlayer4Action3");
 				}
 			}
 		});
@@ -4501,13 +4603,13 @@ public class ServerGMUI {
 				if (player4Action4.isSelected())
 				{
 					player4Action4.setSelected(false);
-					Server.player4Action4 = true;
-					Server.input("AddPlayer4Action4");
+					server.player4Action4 = true;
+					server.input("AddPlayer4Action4");
 				} else
 				{
 					player4Action4.setSelected(true);
-					Server.player4Action4 = false;
-					Server.input("RemovePlayer4Action4");
+					server.player4Action4 = false;
+					server.input("RemovePlayer4Action4");
 				}
 			}
 		});
@@ -4537,13 +4639,13 @@ public class ServerGMUI {
 				if (player4Action5.isSelected())
 				{
 					player4Action5.setSelected(false);
-					Server.player4Action5 = true;
-					Server.input("AddPlayer4Action5");
+					server.player4Action5 = true;
+					server.input("AddPlayer4Action5");
 				} else
 				{
 					player4Action5.setSelected(true);
-					Server.player4Action5 = false;
-					Server.input("RemovePlayer4Action5");
+					server.player4Action5 = false;
+					server.input("RemovePlayer4Action5");
 				}
 			}
 		});
@@ -4563,6 +4665,56 @@ public class ServerGMUI {
 				background.getWidth(), background.getHeight(), Image.SCALE_SMOOTH)));
 
 		/*
+		 * SETTING LOCATIONS
+		 */
+
+		p1plus1.setBounds(XOne, YOne, 40, 20);
+		p1plus5.setBounds(XOne + XOffsetOne, YOne, 40, 20);
+		p1plus10.setBounds(XOne + (XOffsetOne * 2), YOne, 40, 20);
+		p1minus1.setBounds(XOne + (XOffsetOne * 2) + XOffsetTwo, YOne, 40, 20);
+		p1minus5.setBounds(XOne + (XOffsetOne * 3) + XOffsetTwo, YOne, 40, 20);
+		p1minus10.setBounds(XOne + (XOffsetOne * 4) + XOffsetTwo, YOne, 40, 20);
+
+		p1plus10gold.setBounds(XOne, YOne + YOffset, 40, 20);
+		p1plus100gold.setBounds(XOne + XOffsetOne, YOne + YOffset, 40, 20);
+		p1plus500gold.setBounds(XOne + (XOffsetOne * 2), YOne + YOffset, 40, 20);
+		p1minus10gold.setBounds(XOne + (XOffsetOne * 2) + XOffsetTwo, YOne + YOffset, 40, 20);
+		p1minus100gold.setBounds(XOne + (XOffsetOne * 3) + XOffsetTwo, YOne + YOffset, 40, 20);
+		p1minus500gold.setBounds(XOne + (XOffsetOne * 4) + XOffsetTwo, YOne + YOffset, 40, 20);
+
+		p1c1plus1.setBounds(XOne, YOne + (YOffset * 2), 40, 20);
+		p1c1plus5.setBounds(XOne + XOffsetOne, YOne + (YOffset * 2), 40, 20);
+		p1c1plus10.setBounds(XOne + (XOffsetOne * 2), YOne + (YOffset * 2), 40, 20);
+		p1c1minus1.setBounds(XOne + (XOffsetOne * 2) + XOffsetTwo, YOne + (YOffset * 2), 40, 20);
+		p1c1minus5.setBounds(XOne + (XOffsetOne * 3) + XOffsetTwo, YOne + (YOffset * 2), 40, 20);
+		p1c1minus10.setBounds(XOne + (XOffsetOne * 4) + XOffsetTwo, YOne + (YOffset * 2), 40, 20);
+
+		p1c2plus1.setBounds(XOne, YOne + (YOffset * 3), 40, 20);
+		p1c2plus5.setBounds(XOne + XOffsetOne, YOne + (YOffset * 3), 40, 20);
+		p1c2plus10.setBounds(XOne + (XOffsetOne * 2), YOne + (YOffset * 3), 40, 20);
+		p1c2minus1.setBounds(XOne + (XOffsetOne * 2) + XOffsetTwo, YOne + (YOffset * 3), 40, 20);
+		p1c2minus5.setBounds(XOne + (XOffsetOne * 3) + XOffsetTwo, YOne + (YOffset * 3), 40, 20);
+		p1c2minus10.setBounds(XOne + (XOffsetOne * 4) + XOffsetTwo, YOne + (YOffset * 3), 40, 20);
+
+		player1Action1.setBounds(XOne - 10, YOne + (YOffset * 3) + 30, 60, 60);
+		player1Action2.setBounds(XOne - 10 + 45, YOne + (YOffset * 3) + 30, 60, 60);
+		player1Action3.setBounds(XOne - 10 + (45 * 2), YOne + (YOffset * 3) + 30, 60, 60);
+		player1Action4.setBounds(XOne - 10 + (45 * 2) + 60, YOne + (YOffset * 3) + 30, 60, 60);
+		player1Action5.setBounds(XOne - 10 + (45 * 2) + 120, YOne + (YOffset * 3) + 30, 60, 60);
+		player1Action6.setBounds(XOne - 10 + (45 * 3) + 120, YOne + (YOffset * 3) + 30, 60, 60);
+		player1Action7.setBounds(XOne - 10 + (45 * 4) + 120, YOne + (YOffset * 3) + 30, 60, 60);
+		player1Action8.setBounds(XOne - 10 + (45 * 2) + 60, YOne + (YOffset * 3) + 70, 60, 60);
+
+		slotPlayer1Action1.setBounds(XOne - 10, YOne + (YOffset * 3) + 30, 60, 60);
+		slotPlayer1Action2.setBounds(XOne - 10 + 45, YOne + (YOffset * 3) + 30, 60, 60);
+		slotPlayer1Action3.setBounds(XOne - 10 + (45 * 2), YOne + (YOffset * 3) + 30, 60, 60);
+		slotPlayer1Action4.setBounds(XOne - 10 + (45 * 2) + 60, YOne + (YOffset * 3) + 30, 60, 60);
+		slotPlayer1Action5.setBounds(XOne - 10 + (45 * 2) + 120, YOne + (YOffset * 3) + 30, 60, 60);
+		slotPlayer1Action6.setBounds(XOne - 10 + (45 * 3) + 120, YOne + (YOffset * 3) + 30, 60, 60);
+		slotPlayer1Action7.setBounds(XOne - 10 + (45 * 4) + 120, YOne + (YOffset * 3) + 30, 60, 60);
+		slotPlayer1Action8.setBounds(XOne - 10 + (45 * 2) + 60, YOne + (YOffset * 3) + 70, 60, 60);
+
+		/*
 		 * ADDING
 		 */
 
@@ -4572,5 +4724,221 @@ public class ServerGMUI {
 		contentPane.add(p4);
 
 		contentPane.add(background);
+
+		/*
+		 * FINE TUNING
+		 */
+
+		player1Action6.setEnabled(false);
+		player1Action7.setEnabled(false);
+		player1Action8.setEnabled(false);
+
+	}
+
+	public void actionsTab(JMenu menu, int player)
+	{
+		JMenu a1 = new JMenu("Action 1");
+		for (JButton button : actionSwapper(player, 1))
+			a1.add(button);
+		menu.add(a1);
+	}
+
+	public JButton[] actionSwapper(final int player, final int number)
+	{
+		JButton move = new JButton();
+		move.setIcon(new ImageIcon(new ImageIcon(UI.class.getResource("/resources/UI/move.png"))
+				.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+		move.setSize(40, 40);
+		move.setBorderPainted(false);
+		move.setContentAreaFilled(false);
+		move.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				server.input("SetPlayer" + player + "Action" + number + " MOVE");
+				actionTypes.replace("p" + player + "a" + number, "MOVE");
+				swap(player, number, "move");
+			}
+		});
+
+		JButton normal = new JButton();
+		normal.setIcon(new ImageIcon(
+				new ImageIcon(UI.class.getResource("/resources/UI/action.png")).getImage()
+						.getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+		normal.setSize(40, 40);
+		normal.setBorderPainted(false);
+		normal.setContentAreaFilled(false);
+		normal.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				server.input("SetPlayer" + player + "Action" + number + " NORMAL");
+				actionTypes.replace("p" + player + "a" + number, "NORMAL");
+				swap(player, number, "action");
+			}
+		});
+
+		JButton anytime = new JButton();
+		anytime.setIcon(new ImageIcon(new ImageIcon(UI.class
+				.getResource("/resources/UI/action.png")).getImage().getScaledInstance(40, 40,
+				Image.SCALE_SMOOTH)));
+		anytime.setSize(40, 40);
+		anytime.setBorderPainted(false);
+		anytime.setContentAreaFilled(false);
+		anytime.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				server.input("SetPlayer" + player + "Action" + number + " ANYTIME");
+				actionTypes.replace("p" + player + "a" + number, "ANYTIME");
+				swap(player, number, "anytime");
+			}
+		});
+
+		return new JButton[] { move, normal, anytime };
+	}
+
+	public void swap(int player, int number, String type)
+	{
+		if (player == 1)
+		{
+			if (number == 1)
+				player1Action1.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 2)
+				player1Action2.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 3)
+				player1Action3.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 4)
+				player1Action4.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 5)
+				player1Action5.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 6)
+				player1Action6.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 7)
+				player1Action7.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 8)
+				player1Action8.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+		} else if (player == 2)
+		{
+			if (number == 1)
+				player2Action1.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 2)
+				player2Action2.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 3)
+				player2Action3.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 4)
+				player2Action4.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 5)
+				player2Action5.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 6)
+				player2Action6.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 7)
+				player2Action7.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 8)
+				player2Action8.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+		} else if (player == 3)
+		{
+			if (number == 1)
+				player3Action1.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 2)
+				player3Action2.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 3)
+				player3Action3.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 4)
+				player3Action4.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 5)
+				player3Action5.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 6)
+				player3Action6.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 7)
+				player3Action7.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 8)
+				player3Action8.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+		} else if (player == 2)
+		{
+			if (number == 1)
+				player4Action1.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 2)
+				player4Action2.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 3)
+				player4Action3.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 4)
+				player4Action4.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 5)
+				player4Action5.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 6)
+				player4Action6.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 7)
+				player4Action7.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+			else if (number == 8)
+				player4Action8.setIcon(new ImageIcon(new ImageIcon(UI.class
+						.getResource("/resources/UI/" + type + ".png")).getImage()
+						.getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+		}
 	}
 }
