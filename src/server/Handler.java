@@ -11,16 +11,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Handler extends Thread {
-
-	private Server server;
-	protected Socket socket;
-
+	
+	private Server		server;
+	protected Socket	socket;
+	
 	public Handler(Server server, Socket clientSocket)
 	{
 		this.server = server;
 		this.socket = clientSocket;
 	}
-
+	
 	public void run()
 	{
 		InputStream inp = null;
@@ -35,141 +35,165 @@ public class Handler extends Thread {
 		{
 			return;
 		}
-
+		
 		String ip = socket.getRemoteSocketAddress().toString();
-
+		
 		final PrintWriter pr = new PrintWriter(out, true);
 		server.writers.add(pr);
 		server.log(ip + " has connected.");
 		pr.println("StartUI");
 		new Timer().schedule(new TimerTask() {
-
+			
 			@Override
 			public void run()
 			{
-				if (server.p1)
-					pr.println("EnablePlayer1");
-				pr.println("SetPlayer1Stam " + server.player1Stam);
-				pr.println("SetPlayer1CStam " + server.player1CStam);
-				pr.println("AddPlayer1Gold " + server.player1Gold);
-				pr.println("SetPlayer1Action1 " + server.gmui.actionTypes.get("p1a1"));
-				pr.println("SetPlayer1Action2 " + server.gmui.actionTypes.get("p1a2"));
-				pr.println("SetPlayer1Action3 " + server.gmui.actionTypes.get("p1a3"));
-				pr.println("SetPlayer1Action4 " + server.gmui.actionTypes.get("p1a4"));
-				pr.println("SetPlayer1Action5 " + server.gmui.actionTypes.get("p1a5"));
-				pr.println("SetPlayer1Action6 " + server.gmui.actionTypes.get("p1a6"));
-				pr.println("SetPlayer1Action7 " + server.gmui.actionTypes.get("p1a7"));
-				pr.println("SetPlayer1Action8 " + server.gmui.actionTypes.get("p1a8"));
-				if (server.player1Action1 == false)
-					pr.println("RemovePlayer1Action1");
-				if (server.player1Action2 == false)
-					pr.println("RemovePlayer1Action2");
-				if (server.player1Action3 == false)
-					pr.println("RemovePlayer1Action3");
-				if (server.player1Action4 == false)
-					pr.println("RemovePlayer1Action4");
-				if (server.player1Action5 == false)
-					pr.println("RemovePlayer1Action5");
-				if (server.player1Action6 == false)
-					pr.println("RemovePlayer1Action5");
-				if (server.player1Action7 == false)
-					pr.println("RemovePlayer1Action5");
-				if (server.player1Action8 == false)
-					pr.println("RemovePlayer1Action5");
-
-				if (server.p2)
-					pr.println("EnablePlayer2");
-				pr.println("SetPlayer2Stam " + server.player2Stam);
-				pr.println("SetPlayer2CStam " + server.player2CStam);
-				pr.println("AddPlayer2Gold " + server.player2Gold);
-				pr.println("SetPlayer2Action1 " + server.gmui.actionTypes.get("p2a1"));
-				pr.println("SetPlayer2Action2 " + server.gmui.actionTypes.get("p2a2"));
-				pr.println("SetPlayer2Action3 " + server.gmui.actionTypes.get("p2a3"));
-				pr.println("SetPlayer2Action4 " + server.gmui.actionTypes.get("p2a4"));
-				pr.println("SetPlayer2Action5 " + server.gmui.actionTypes.get("p2a5"));
-				pr.println("SetPlayer2Action6 " + server.gmui.actionTypes.get("p2a6"));
-				pr.println("SetPlayer2Action7 " + server.gmui.actionTypes.get("p2a7"));
-				pr.println("SetPlayer2Action8 " + server.gmui.actionTypes.get("p2a8"));
-				if (server.player2Action1 == false)
-					pr.println("RemovePlayer2Action1");
-				if (server.player2Action2 == false)
-					pr.println("RemovePlayer2Action2");
-				if (server.player2Action3 == false)
-					pr.println("RemovePlayer2Action3");
-				if (server.player2Action4 == false)
-					pr.println("RemovePlayer2Action4");
-				if (server.player2Action5 == false)
-					pr.println("RemovePlayer2Action5");
-				if (server.player2Action6 == false)
-					pr.println("RemovePlayer2Action5");
-				if (server.player2Action7 == false)
-					pr.println("RemovePlayer2Action5");
-				if (server.player2Action8 == false)
-					pr.println("RemovePlayer2Action5");
-
-				if (server.p3)
-					pr.println("EnablePlayer3");
-				pr.println("SetPlayer3Stam " + server.player3Stam);
-				pr.println("SetPlayer3CStam " + server.player3CStam);
-				pr.println("AddPlayer3Gold " + server.player3Gold);
-				pr.println("SetPlayer3Action1 " + server.gmui.actionTypes.get("p3a1"));
-				pr.println("SetPlayer3Action2 " + server.gmui.actionTypes.get("p3a2"));
-				pr.println("SetPlayer3Action3 " + server.gmui.actionTypes.get("p3a3"));
-				pr.println("SetPlayer3Action4 " + server.gmui.actionTypes.get("p3a4"));
-				pr.println("SetPlayer3Action5 " + server.gmui.actionTypes.get("p3a5"));
-				pr.println("SetPlayer3Action6 " + server.gmui.actionTypes.get("p3a6"));
-				pr.println("SetPlayer3Action7 " + server.gmui.actionTypes.get("p3a7"));
-				pr.println("SetPlayer3Action8 " + server.gmui.actionTypes.get("p3a8"));
-				if (server.player3Action1 == false)
-					pr.println("RemovePlayer3Action1");
-				if (server.player3Action2 == false)
-					pr.println("RemovePlayer3Action2");
-				if (server.player3Action3 == false)
-					pr.println("RemovePlayer3Action3");
-				if (server.player3Action4 == false)
-					pr.println("RemovePlayer3Action4");
-				if (server.player3Action5 == false)
-					pr.println("RemovePlayer3Action5");
-				if (server.player3Action6 == false)
-					pr.println("RemovePlayer3Action5");
-				if (server.player3Action7 == false)
-					pr.println("RemovePlayer3Action5");
-				if (server.player3Action8 == false)
-					pr.println("RemovePlayer3Action5");
-
-				if (server.p4)
-					pr.println("EnablePlayer4");
-				pr.println("SetPlayer4Stam " + server.player4Stam);
-				pr.println("SetPlayer4CStam " + server.player4CStam);
-				pr.println("AddPlayer4Gold " + server.player4Gold);
-				pr.println("SetPlayer4Action1 " + server.gmui.actionTypes.get("p4a1"));
-				pr.println("SetPlayer4Action2 " + server.gmui.actionTypes.get("p4a2"));
-				pr.println("SetPlayer4Action3 " + server.gmui.actionTypes.get("p4a3"));
-				pr.println("SetPlayer4Action4 " + server.gmui.actionTypes.get("p4a4"));
-				pr.println("SetPlayer4Action5 " + server.gmui.actionTypes.get("p4a5"));
-				pr.println("SetPlayer4Action6 " + server.gmui.actionTypes.get("p4a6"));
-				pr.println("SetPlayer4Action7 " + server.gmui.actionTypes.get("p4a7"));
-				pr.println("SetPlayer4Action8 " + server.gmui.actionTypes.get("p4a8"));
-				if (server.player4Action1 == false)
-					pr.println("RemovePlayer4Action1");
-				if (server.player4Action2 == false)
-					pr.println("RemovePlayer4Action2");
-				if (server.player4Action3 == false)
-					pr.println("RemovePlayer4Action3");
-				if (server.player4Action4 == false)
-					pr.println("RemovePlayer4Action4");
-				if (server.player4Action5 == false)
-					pr.println("RemovePlayer4Action5");
-				if (server.player4Action5 == false)
-					pr.println("RemovePlayer4Action6");
-				if (server.player4Action5 == false)
-					pr.println("RemovePlayer4Action7");
-				if (server.player4Action5 == false)
-					pr.println("RemovePlayer4Action8");
+				if (server.player1)
+					pr.println("Player 1 enable");
+				pr.println("Player 1 maxstamina " + server.player1Stam);
+				pr.println("Player 1 stamina " + server.player1CStam);
+				pr.println("Player 1 gold " + server.player1Gold);
+				pr.println("Player 1 action 1 " + server.player1Action1);
+				pr.println("Player 1 action 2 " + server.player1Action2);
+				pr.println("Player 1 action 3 " + server.player1Action3);
+				pr.println("Player 1 action 4 " + server.player1Action4);
+				pr.println("Player 1 action 5 " + server.player1Action5);
+				pr.println("Player 1 actionenable 6 " + server.player1Action6e);
+				pr.println("Player 1 action 6 " + server.player1Action6);
+				pr.println("Player 1 actionenable 7 " + server.player1Action7e);
+				pr.println("Player 1 action 7 " + server.player1Action7);
+				for (int i = 1; i <= 7; i++)
+				{
+					pr.println("Player 1 actiontype " + i + " " + server.actionTypes.get("p1a" + i));
+				}
+				
+				if (server.player1c1enabled)
+					pr.println("Companion 1 1 enable");
+				pr.println("Companion 1 1 maxstamina " + server.player1c1Stam);
+				pr.println("Companion 1 1 stamina " + server.player1c1CStam);
+				
+				if (server.player1c2enabled)
+					pr.println("Companion 1 2 enable");
+				pr.println("Companion 1 2 maxstamina " + server.player1c2Stam);
+				pr.println("Companion 1 2 stamina " + server.player1c2CStam);
+				
+				if (server.player1c3enabled)
+					pr.println("Companion 1 3 enable");
+				pr.println("Companion 1 3 maxstamina " + server.player1c3Stam);
+				pr.println("Companion 1 3 stamina " + server.player1c3CStam);
+				
+				///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				
+				if (server.player2)
+					pr.println("Player 2 enable");
+				pr.println("Player 2 maxstamina " + server.player2Stam);
+				pr.println("Player 2 stamina " + server.player2CStam);
+				pr.println("Player 2 gold " + server.player2Gold);
+				pr.println("Player 2 action 1 " + server.player2Action1);
+				pr.println("Player 2 action 2 " + server.player2Action2);
+				pr.println("Player 2 action 3 " + server.player2Action3);
+				pr.println("Player 2 action 4 " + server.player2Action4);
+				pr.println("Player 2 action 5 " + server.player2Action5);
+				pr.println("Player 2 actionenable 6 " + server.player2Action6e);
+				pr.println("Player 2 action 6 " + server.player2Action6);
+				pr.println("Player 2 actionenable 7 " + server.player2Action7e);
+				pr.println("Player 2 action 7 " + server.player2Action7);
+				for (int i = 1; i <= 7; i++)
+				{
+					pr.println("Player 2 actiontype " + i + " " + server.actionTypes.get("p2a" + i));
+				}
+				
+				if (server.player2c1enabled)
+					pr.println("Companion 2 1 enable");
+				pr.println("Companion 2 1 maxstamina " + server.player2c1Stam);
+				pr.println("Companion 2 1 stamina " + server.player2c1CStam);
+				
+				if (server.player2c2enabled)
+					pr.println("Companion 2 2 enable");
+				pr.println("Companion 2 2 maxstamina " + server.player2c2Stam);
+				pr.println("Companion 2 2 stamina " + server.player2c2CStam);
+				
+				if (server.player2c3enabled)
+					pr.println("Companion 2 3 enable");
+				pr.println("Companion 2 3 maxstamina " + server.player2c3Stam);
+				pr.println("Companion 2 3 stamina " + server.player2c3CStam);
+				
+				///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				
+				if (server.player3)
+					pr.println("Player 3 enable");
+				pr.println("Player 3 maxstamina " + server.player3Stam);
+				pr.println("Player 3 stamina " + server.player3CStam);
+				pr.println("Player 3 gold " + server.player3Gold);
+				pr.println("Player 3 action 1 " + server.player3Action1);
+				pr.println("Player 3 action 2 " + server.player3Action2);
+				pr.println("Player 3 action 3 " + server.player3Action3);
+				pr.println("Player 3 action 4 " + server.player3Action4);
+				pr.println("Player 3 action 5 " + server.player3Action5);
+				pr.println("Player 3 actionenable 6 " + server.player3Action6e);
+				pr.println("Player 3 action 6 " + server.player3Action6);
+				pr.println("Player 3 actionenable 7 " + server.player3Action7e);
+				pr.println("Player 3 action 7 " + server.player3Action7);
+				for (int i = 1; i <= 7; i++)
+				{
+					pr.println("Player 3 actiontype " + i + " " + server.actionTypes.get("p3a" + i));
+				}
+				
+				if (server.player3c1enabled)
+					pr.println("Companion 3 1 enable");
+				pr.println("Companion 3 1 maxstamina " + server.player3c1Stam);
+				pr.println("Companion 3 1 stamina " + server.player3c1CStam);
+				
+				if (server.player3c2enabled)
+					pr.println("Companion 3 2 enable");
+				pr.println("Companion 3 2 maxstamina " + server.player3c2Stam);
+				pr.println("Companion 3 2 stamina " + server.player3c2CStam);
+				
+				if (server.player3c3enabled)
+					pr.println("Companion 3 3 enable");
+				pr.println("Companion 3 3 maxstamina " + server.player3c3Stam);
+				pr.println("Companion 3 3 stamina " + server.player3c3CStam);
+				
+				///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				
+				if (server.player4)
+					pr.println("Player 4 enable");
+				pr.println("Player 4 maxstamina " + server.player4Stam);
+				pr.println("Player 4 stamina " + server.player4CStam);
+				pr.println("Player 4 gold " + server.player4Gold);
+				pr.println("Player 4 action 1 " + server.player4Action1);
+				pr.println("Player 4 action 2 " + server.player4Action2);
+				pr.println("Player 4 action 3 " + server.player4Action3);
+				pr.println("Player 4 action 4 " + server.player4Action4);
+				pr.println("Player 4 action 5 " + server.player4Action5);
+				pr.println("Player 4 actionenable 6 " + server.player4Action6e);
+				pr.println("Player 4 action 6 " + server.player4Action6);
+				pr.println("Player 4 actionenable 7 " + server.player4Action7e);
+				pr.println("Player 4 action 7 " + server.player4Action7);
+				for (int i = 1; i <= 7; i++)
+				{
+					pr.println("Player 4 actiontype " + i + " " + server.actionTypes.get("p4a" + i));
+				}
+				
+				if (server.player4c1enabled)
+					pr.println("Companion 4 1 enable");
+				pr.println("Companion 4 1 maxstamina " + server.player4c1Stam);
+				pr.println("Companion 4 1 stamina " + server.player4c1CStam);
+				
+				if (server.player4c2enabled)
+					pr.println("Companion 4 2 enable");
+				pr.println("Companion 4 2 maxstamina " + server.player4c2Stam);
+				pr.println("Companion 4 2 stamina " + server.player4c2CStam);
+				
+				if (server.player4c3enabled)
+					pr.println("Companion 4 3 enable");
+				pr.println("Companion 4 3 maxstamina " + server.player4c3Stam);
+				pr.println("Companion 4 3 stamina " + server.player4c3CStam);
+				
+				///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				
 			}
 		}, 350);
-		// Stamina hasn't been set from the GMUI class - TODO Old note - What does it mean
-
+		
 		String line;
 		while (true)
 		{
@@ -178,17 +202,17 @@ public class Handler extends Thread {
 				line = brinp.readLine();
 				if ((line == null))
 					continue;
-
+				
 				String[] inputs = line.split(" ");
-
+				
 				switch (inputs[0])
 				{
-				case "Quit":
-				{
-					socket.close();
-					return;
-				}
-
+					case "Quit":
+					{
+						socket.close();
+						return;
+					}
+					
 				}
 			} catch (IOException e)
 			{
