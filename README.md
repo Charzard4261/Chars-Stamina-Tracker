@@ -26,11 +26,36 @@ Run the .jar file
 Click the 'Client'button
 Enter the host's IP address (or, in the host's case, leave it as 127.0.0.1, it redirects to the host machine)
 Set the port to the host's choosen port (default 9002)
+Select the screen you want it to run on 
 Click 'connect'
+
+### Server
+
+Run the .jar file
+Click the 'Server' button
+
+## Errors
+
+### Clientside
+
+```
+Couldn't read IP address
+```
+Check the IP, it should only have numbers separated by full-stops (.)
+
+```
+Couldn't get IO for the connection to <IP>
+```
+The IP does not have a server, does not have a server on the requested port, or host has shut down a connected server
+
+### Serverside
+
+```
+Couldn't bind port <port>
+```
+An application is already using the selected port
 
 # Credits
 Images:
-  - Client GUI
-  - Client side actions & Gold created by Robert Moran (Found in Coestar's Imgur)
-
-Created using Swing GUI builder.
+  - Created using the [Eclipse](https://www.eclipse.org/) Java Oxygen IDE and [Swing Window Builder](https://en.wikipedia.org/wiki/Swing_(Java))  
+  - Images created by [Konpaatre](https://www.urealms.com/profile/Konpaatre)
