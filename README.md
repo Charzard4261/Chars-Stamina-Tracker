@@ -1,5 +1,8 @@
-# URealmsUI
-An unofficial multiuser stamina &amp; actions tracker for Robert Moran's tabletop game 'URealms'
+# Char's Stamina Tracker
+
+An unofficial multiuser stamina &amp; actions tracker for [Robert Moran](https://www.youtube.com/user/BruceWillakers)'s tabletop game [URealms](https://www.urealms.com/)
+
+Compatible with [Konpaatre](https://www.urealms.com/profile/Konpaatre)'s URealms fan expansion [KonRealms](https://forums.urealms.com/discussion/5466/konrealms-1037-cards-fan-expansion-haunter-approved) 
 
 ## Getting Started
 
@@ -55,7 +58,12 @@ Couldn't bind port <port>
 ```
 An application is already using the selected port
 
-# Credits
-Images:
+## Credits
+
   - Created using the [Eclipse](https://www.eclipse.org/) Java Oxygen IDE and [Swing Window Builder](https://en.wikipedia.org/wiki/Swing_(Java))  
   - Images created by [Konpaatre](https://www.urealms.com/profile/Konpaatre)
+  - Sound effects created by [Konpaatre](https://www.urealms.com/profile/Konpaatre) using [SFXR by DrPetter](http://www.drpetter.se/project_sfxr.html)
+
+## License
+
+This project is licensed under the GNU General Public License - see the [LICENSE](LICENSE) file for details
