@@ -26,16 +26,26 @@ Keep reading for how to host and connect to servers.
 ### Client
 
 Run the .jar file
+
 Click the 'Client'button
+
 Enter the host's IP address (or, in the host's case, leave it as 127.0.0.1, it redirects to the host machine)
+
 Set the port to the host's choosen port (default 9002)
+
 Select the screen you want it to run on 
+
 Click 'connect'
 
 ### Server
 
+Portforward port 9002 (Will be editable at a later date)
+
 Run the .jar file
+
 Click the 'Server' button
+
+Google "Whats my ip" and give your friends the result
 
 ## Errors
 
