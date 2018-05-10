@@ -1,5 +1,24 @@
 package server;
 
+/**
+	This file is part of 'Char's Stamina Tracker' (Referred to as CST).
+
+    CST is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    CST is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with CST.  If not, see <http://www.gnu.org/licenses/>.
+    
+    Copyright (C) 2018  Charzard4261
+ **/
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -7,6 +26,9 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class Server {
 	
@@ -60,109 +82,123 @@ public class Server {
 		actionTypes.put("p4a8", "ANYTIME");
 	}
 
+	public String gmImage = "";
+	
 	public boolean player1 = false;
-	public int player1Stam = 10;
-	public int player1CStam = 10;
+	public String player1Image = "";
+	public int player1Stam = 10, player1CStam = 10;
 	public int player1Gold = 0;
 	public boolean player1c1enabled = false;
-	public int player1c1Stam = 10;
-	public int player1c1CStam = 10;
+	public int player1c1Stam = 10, player1c1CStam = 10;
 	public boolean player1c2enabled = false;
-	public int player1c2Stam = 10;
-	public int player1c2CStam = 10;
+	public int player1c2Stam = 10, player1c2CStam = 10;
 	public boolean player1c3enabled = false;
-	public int player1c3Stam = 10;
-	public int player1c3CStam = 10;
+	public int player1c3Stam = 10, player1c3CStam = 10;
 	public boolean 
 			player1Action1 = true, 
 			player1Action2 = true, 
 			player1Action3 = true,
 			player1Action4 = true, 
 			player1Action5 = true,
-			player1Action6e = false,
 			player1Action6 = true,
-			player1Action7e = false,
 			player1Action7 = true,
-			player1Action8 = true;
+			player1Action8 = true,
+			player1Action1e = true,
+			player1Action2e = true,
+			player1Action3e = true,
+			player1Action4e = true,
+			player1Action5e = true,
+			player1Action6e = false,
+			player1Action7e = false,
+			player1Action8e = false;
 
 	public boolean player2 = false;
-	public int player2Stam = 10;
-	public int player2CStam = 10;
+	public String player2Image = "";
+	public int player2Stam = 10, player2CStam = 10;
 	public int player2Gold = 0;
 	public boolean player2c1enabled = false;
-	public int player2c1Stam = 10;
-	public int player2c1CStam = 10;
+	public int player2c1Stam = 10, player2c1CStam = 10;
 	public boolean player2c2enabled = false;
-	public int player2c2Stam = 10;
-	public int player2c2CStam = 10;
+	public int player2c2Stam = 10, player2c2CStam = 10;
 	public boolean player2c3enabled = false;
-	public int player2c3Stam = 10;
-	public int player2c3CStam = 10;
+	public int player2c3Stam = 10, player2c3CStam = 10;
 	public boolean 
 			player2Action1 = true, 
 			player2Action2 = true, 
 			player2Action3 = true,
 			player2Action4 = true, 
 			player2Action5 = true, 
-			player2Action6e = false,
 			player2Action6 = true,
-			player2Action7e = false,
 			player2Action7 = true, 
-			player2Action8 = true;
+			player2Action8 = true,
+			player2Action1e = true,
+			player2Action2e = true,
+			player2Action3e = true,
+			player2Action4e = true,
+			player2Action5e = true,
+			player2Action6e = false,
+			player2Action7e = false,
+			player2Action8e = false;
 
 	public boolean player3 = false;
-	public int player3Stam = 10;
-	public int player3CStam = 10;
+	public String player3Image = "";
+	public int player3Stam = 10, player3CStam = 10;
 	public int player3Gold = 0;
 	public boolean player3c1enabled = false;
-	public int player3c1Stam = 10;
-	public int player3c1CStam = 10;
+	public int player3c1Stam = 10, player3c1CStam = 10;
 	public boolean player3c2enabled = false;
-	public int player3c2Stam = 10;
-	public int player3c2CStam = 10;
+	public int player3c2Stam = 10, player3c2CStam = 10;
 	public boolean player3c3enabled = false;
-	public int player3c3Stam = 10;
-	public int player3c3CStam = 10;
+	public int player3c3Stam = 10, player3c3CStam = 10;
 	public boolean 
 			player3Action1 = true, 
 			player3Action2 = true, 
 			player3Action3 = true,
 			player3Action4 = true, 
 			player3Action5 = true, 
-			player3Action6e = false,
 			player3Action6 = true,
-			player3Action7e = false,
 			player3Action7 = true, 
-			player3Action8 = true;
+			player3Action8 = true,
+			player3Action1e = true,
+			player3Action2e = true,
+			player3Action3e = true,
+			player3Action4e = true,
+			player3Action5e = true,
+			player3Action6e = false,
+			player3Action7e = false,
+			player3Action8e = false;
 
 	public boolean player4 = false;
-	public int player4Stam = 10;
-	public int player4CStam = 10;
+	public String player4Image = "";
+	public int player4Stam = 10, player4CStam = 10;
 	public int player4Gold = 0;
 	public boolean player4c1enabled = false;
-	public int player4c1Stam = 10;
-	public int player4c1CStam = 10;
+	public int player4c1Stam = 10, player4c1CStam = 10;
 	public boolean player4c2enabled = false;
-	public int player4c2Stam = 10;
-	public int player4c2CStam = 10;
+	public int player4c2Stam = 10, player4c2CStam = 10;
 	public boolean player4c3enabled = false;
-	public int player4c3Stam = 10;
-	public int player4c3CStam = 10;
+	public int player4c3Stam = 10, player4c3CStam = 10;
 	public boolean 
 			player4Action1 = true, 
 			player4Action2 = true, 
 			player4Action3 = true,
 			player4Action4 = true, 
 			player4Action5 = true, 
-			player4Action6e = false,
 			player4Action6 = true,
-			player4Action7e = false,
 			player4Action7 = true, 
-			player4Action8 = true;
+			player4Action8 = true,
+			player4Action1e = true,
+			player4Action2e = true,
+			player4Action3e = true,
+			player4Action4e = true,
+			player4Action5e = true,
+			player4Action6e = false,
+			player4Action7e = false,
+			player4Action8e = false;
 
 	// @formatter:on
 	
-	private static ServerUI ui = new ServerUI();
+	// private static ServerUI ui = new ServerUI(); DEBUG BUILD UI
 	
 	public void main(int port)
 	{
@@ -174,14 +210,17 @@ public class Server {
 			serverSocket = new ServerSocket(port);
 		} catch (IOException e)
 		{
-			ui.log("Couldn't bind port " + port + ".");
-			ui.log("Check if another application is using it and try again.");
+			JOptionPane.showMessageDialog(new JFrame(), "Couldn't bind port " + port + "\nCheck if another application is using it and try again",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
+			// ui.log("Couldn't bind port " + port + ".");
+			// ui.log("Check if another application is using it and try again.");
 			return;
 		}
 		
 		gmui = new ServerGMUI(this);
 		
-		ui.log("Successfully created URealms Manager server.");
+		// ui.log("Successfully created URealms Manager server.");
 		
 		while (true)
 		{
@@ -190,7 +229,9 @@ public class Server {
 				socket = serverSocket.accept();
 			} catch (IOException e)
 			{
-				ui.log("I/O error: " + e);
+				JOptionPane.showMessageDialog(new JFrame(), "I/O error: " + e, "Error", JOptionPane.ERROR_MESSAGE);
+				System.exit(1);
+				// ui.log("I/O error: " + e);
 				break;
 			}
 			new Handler(this, socket).start();
@@ -271,6 +312,18 @@ public class Server {
 			player1c2CStam = 0;
 		}
 		
+		if (player1c3CStam > player1c3Stam)
+		{
+			player1c3CStam = player1c3Stam;
+		}
+		
+		if (player1c3CStam < 0)
+		{
+			player1c3CStam = 0;
+		}
+		
+		// -------------------------------------------------
+		
 		if (player2c1CStam > player2c1Stam)
 		{
 			player2c1CStam = player2c1Stam;
@@ -291,6 +344,18 @@ public class Server {
 			player2c2CStam = 0;
 		}
 		
+		if (player2c3CStam > player2c3Stam)
+		{
+			player2c3CStam = player2c3Stam;
+		}
+		
+		if (player2c3CStam < 0)
+		{
+			player2c3CStam = 0;
+		}
+		
+		// -------------------------------------------------
+		
 		if (player3c1CStam > player3c1Stam)
 		{
 			player3c1CStam = player3c1Stam;
@@ -309,6 +374,48 @@ public class Server {
 		if (player3c2CStam < 0)
 		{
 			player3c2CStam = 0;
+		}
+		
+		if (player3c3CStam > player3c3Stam)
+		{
+			player3c3CStam = player3c3Stam;
+		}
+		
+		if (player3c3CStam < 0)
+		{
+			player3c3CStam = 0;
+		}
+		
+		// -------------------------------------------------
+		
+		if (player4c1CStam > player4c1Stam)
+		{
+			player4c1CStam = player4c1Stam;
+		}
+		
+		if (player4c1CStam < 0)
+		{
+			player4c1CStam = 0;
+		}
+		
+		if (player4c2CStam > player4c2Stam)
+		{
+			player4c2CStam = player4c2Stam;
+		}
+		
+		if (player4c2CStam < 0)
+		{
+			player4c2CStam = 0;
+		}
+		
+		if (player4c3CStam > player4c3Stam)
+		{
+			player4c3CStam = player4c3Stam;
+		}
+		
+		if (player4c3CStam < 0)
+		{
+			player4c3CStam = 0;
 		}
 	}
 	
@@ -358,8 +465,8 @@ public class Server {
 			gmui.g4.playercStam.setText(player4c3CStam + "/" + player4c3Stam);
 	}
 	
-	public void log(String s)
-	{
-		ui.log(s);
-	}
+	// public void log(String s)
+	// {
+	// ui.log(s);
+	// }
 }

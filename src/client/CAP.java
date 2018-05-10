@@ -1,12 +1,39 @@
 package client;
 
+/**
+	This file is part of 'Char's Stamina Tracker' (Referred to as CST).
+
+    CST is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    CST is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with CST.  If not, see <http://www.gnu.org/licenses/>.
+    
+    Copyright (C) 2018  Charzard4261
+ **/
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
@@ -15,45 +42,49 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
-// Client Manager Add Players, or CAP for short - My cheat way to cut the code needed by about a quarter
+// Client Manager Add Players, or CAP for short - Uses reflection to cut the code needed by about a quarter
 
 public class CAP {
 	
-	public boolean enabled = false;
+	public boolean	enabled	= false;
+	public double	scalar;
 	
-	public JProgressBar	playerStaminaBar		= new JProgressBar();
-	public JLabel		playerImage				= new JLabel("");
-	public boolean		playerCompanion1enabled	= false;
-	public JProgressBar	playerCompanion1		= new JProgressBar();
-	public boolean		playerCompanion2enabled	= false;
-	public JProgressBar	playerCompanion2		= new JProgressBar();
-	public boolean		playerCompanion3enabled	= false;
-	public JProgressBar	playerCompanion3		= new JProgressBar();
-	public final JLabel	playerGold				= new JLabel("");
-	public final JLabel	playerGoldlbl			= new JLabel("0");
-	public JButton		playerAction1			= new JButton("");
-	public JLabel		slotPlayerAction1		= new JLabel("");
-	public JButton		playerAction2			= new JButton("");
-	public JLabel		slotPlayerAction2		= new JLabel("");
-	public JButton		playerAction3			= new JButton("");
-	public JLabel		slotPlayerAction3		= new JLabel("");
-	public JButton		playerAction4			= new JButton("");
-	public JLabel		slotPlayerAction4		= new JLabel("");
-	public JButton		playerAction5			= new JButton("");
-	public JLabel		slotPlayerAction5		= new JLabel("");
-	boolean				playeraction6			= false, playeraction7 = false;
-	public JButton		playerAction6			= new JButton("");
-	public JLabel		slotPlayerAction6		= new JLabel("");
-	public JButton		playerAction7			= new JButton("");
-	public JLabel		slotPlayerAction7		= new JLabel("");
+	public JProgressBar			playerStaminaBar		= new JProgressBar();
+	public JLabel				playerImage				= new JLabel(), playerBackground = new JLabel("");
+	public boolean				playerCompanion1enabled	= false;
+	public JProgressBar			playerCompanion1		= new JProgressBar();
+	public boolean				playerCompanion2enabled	= false;
+	public JProgressBar			playerCompanion2		= new JProgressBar();
+	public boolean				playerCompanion3enabled	= false;
+	public JProgressBar			playerCompanion3		= new JProgressBar();
+	public final JLabel			playerGold				= new JLabel("");
+	public final JLabel			playerGoldlbl			= new JLabel("0");
+	boolean						playeraction1			= true;
+	boolean						playeraction2			= true;
+	boolean						playeraction3			= true;
+	boolean						playeraction4			= true;
+	boolean						playeraction5			= true;
+	boolean						playeraction6			= false;
+	boolean						playeraction7			= false;
+	boolean						playeraction8			= false;
+	private ArrayList<JButton>	enabledActions			= new ArrayList<JButton>();
+	public JButton				playerAction1			= new JButton("");
+	public JButton				playerAction2			= new JButton("");
+	public JButton				playerAction3			= new JButton("");
+	public JButton				playerAction4			= new JButton("");
+	public JButton				playerAction5			= new JButton("");
+	public JButton				playerAction6			= new JButton("");
+	public JButton				playerAction7			= new JButton("");
+	public JButton				playerAction8			= new JButton("");
 	
-	private int XOne = 0, XTwo = 0, XOffset = 40, YOne = 0, YOffset = 90;
+	private int XOne = 0, XTwo = 0, XOffset = 40, YOne = 0, YOffset = 80;
 	
-	public void add(JPanel panel, int number, int xstart, int ystart)
+	public void add(JPanel panel, int number, double scalar, int xstart, int ystart)
 	{
-		XOne = xstart; // 285
+		this.scalar = scalar;
+		XOne = xstart;
 		XTwo = xstart - 6;
-		YOne = ystart; // 20
+		YOne = ystart;
 		
 		playerStaminaBar.setBorder(new CompoundBorder(new MatteBorder(2, 1, 2, 1, (Color) new Color(64, 64, 64)),
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(128, 128, 128), null)));
@@ -61,10 +92,12 @@ public class CAP {
 		playerStaminaBar.setForeground(Color.GREEN);
 		playerStaminaBar.setMaximum(10);
 		playerStaminaBar.setValue(10);
-		panel.add(playerStaminaBar);
 		
 		playerImage.setVisible(false);
-		panel.add(playerImage);
+		
+		playerBackground.setVisible(false);
+		playerBackground.setIcon(new ImageIcon(new ImageIcon(CAP.class.getResource("/resources/UI/character.png")).getImage()
+				.getScaledInstance((int) Math.floor(scalar * 130), (int) Math.floor(scalar * 130), Image.SCALE_SMOOTH)));
 		
 		playerCompanion1.setFont(new Font("Tahoma", Font.PLAIN, 99));
 		playerCompanion1.setStringPainted(true);
@@ -75,7 +108,6 @@ public class CAP {
 		playerCompanion1.setMaximum(10);
 		playerCompanion1.setValue(10);
 		playerCompanion1.setVisible(false);
-		panel.add(playerCompanion1);
 		
 		playerCompanion2.setFont(new Font("Tahoma", Font.PLAIN, 99));
 		playerCompanion2.setStringPainted(true);
@@ -86,7 +118,6 @@ public class CAP {
 		playerCompanion2.setMaximum(10);
 		playerCompanion2.setValue(10);
 		playerCompanion2.setVisible(false);
-		panel.add(playerCompanion2);
 		
 		playerCompanion3 = new JProgressBar();
 		playerCompanion3.setFont(new Font("Tahoma", Font.PLAIN, 99));
@@ -98,148 +129,171 @@ public class CAP {
 		playerCompanion3.setMaximum(10);
 		playerCompanion3.setValue(10);
 		playerCompanion3.setVisible(false);
-		panel.add(playerCompanion3);
 		
 		playerGoldlbl.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		playerGoldlbl.setOpaque(true);
 		playerGoldlbl.setBackground(Color.DARK_GRAY);
 		playerGoldlbl.setForeground(Color.ORANGE);
 		playerGoldlbl.setHorizontalAlignment(SwingConstants.TRAILING);
+		int font = 11;
+		if (scalar < 1 && scalar >= 0.5)
+			font = 6;
+		else if (scalar > 1 && scalar <= 1.5)
+			font = 1;
+		else if (scalar > 1.5)
+			font = 20;
+		playerGoldlbl.setFont(new Font("Tahoma", Font.PLAIN, font));
 		playerGoldlbl.setVisible(false);
-		panel.add(playerGoldlbl);
 		
-		playerGold.setIcon(new ImageIcon(
-				new ImageIcon(CAP.class.getResource("/resources/UI/gold.png")).getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH)));
+		playerGold.setIcon(new ImageIcon(new ImageIcon(CAP.class.getResource("/resources/UI/gold.png")).getImage()
+				.getScaledInstance((int) Math.floor(scalar * 30), (int) Math.floor(scalar * 30), Image.SCALE_SMOOTH)));
 		playerGold.setVisible(false);
-		panel.add(playerGold);
 		
 		// -------------------------------------------------------------------------------------------------------------------------------------------------------
 		
 		playerAction1.setBorderPainted(false);
 		playerAction1.setContentAreaFilled(false);
 		playerAction1.setVisible(false);
-		playerAction1.setIcon(new ImageIcon(
-				new ImageIcon(CAP.class.getResource("/resources/UI/move.png")).getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH)));
-		playerAction1.setSelectedIcon(new ImageIcon(CAP.class.getResource("/resources/UI/null.png")));
-		panel.add(playerAction1);
-		
-		slotPlayerAction1.setVisible(false);
-		slotPlayerAction1.setIcon(new ImageIcon(
+		playerAction1.setIcon(new ImageIcon(new ImageIcon(CAP.class.getResource("/resources/UI/move slot.png")).getImage()
+				.getScaledInstance((int) Math.floor(scalar * 36), (int) Math.floor(scalar * 36), Image.SCALE_SMOOTH)));
+		playerAction1.setSelectedIcon(new ImageIcon(
 				new ImageIcon(CAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
-		panel.add(slotPlayerAction1);
 		
 		playerAction2.setBorderPainted(false);
 		playerAction2.setContentAreaFilled(false);
 		playerAction2.setVisible(false);
-		playerAction2.setIcon(new ImageIcon(
-				new ImageIcon(CAP.class.getResource("/resources/UI/action.png")).getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH)));
-		playerAction2.setSelectedIcon(new ImageIcon(CAP.class.getResource("/resources/UI/null.png")));
-		panel.add(playerAction2);
-		
-		slotPlayerAction2.setVisible(false);
-		slotPlayerAction2.setIcon(new ImageIcon(
-				new ImageIcon(CAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
-		panel.add(slotPlayerAction2);
+		playerAction2.setIcon(new ImageIcon(new ImageIcon(CAP.class.getResource("/resources/UI/action slot 2.png")).getImage()
+				.getScaledInstance((int) Math.floor(scalar * 44), (int) Math.floor(scalar * 36), Image.SCALE_SMOOTH)));
+		playerAction2.setSelectedIcon(new ImageIcon(
+				new ImageIcon(CAP.class.getResource("/resources/UI/slot 2.png")).getImage().getScaledInstance(44, 36, Image.SCALE_SMOOTH)));
 		
 		playerAction3.setBorderPainted(false);
 		playerAction3.setContentAreaFilled(false);
 		playerAction3.setVisible(false);
-		playerAction3.setIcon(new ImageIcon(
-				new ImageIcon(CAP.class.getResource("/resources/UI/anytime.png")).getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH)));
-		playerAction3.setSelectedIcon(new ImageIcon(CAP.class.getResource("/resources/UI/null.png")));
-		panel.add(playerAction3);
-		
-		slotPlayerAction3.setVisible(false);
-		slotPlayerAction3.setIcon(new ImageIcon(
-				new ImageIcon(CAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
-		panel.add(slotPlayerAction3);
+		playerAction3.setIcon(new ImageIcon(new ImageIcon(CAP.class.getResource("/resources/UI/anytime slot 2.png")).getImage()
+				.getScaledInstance((int) Math.floor(scalar * 44), (int) Math.floor(scalar * 36), Image.SCALE_SMOOTH)));
+		playerAction3.setSelectedIcon(new ImageIcon(
+				new ImageIcon(CAP.class.getResource("/resources/UI/slot 2.png")).getImage().getScaledInstance(44, 36, Image.SCALE_SMOOTH)));
 		
 		playerAction4.setContentAreaFilled(false);
 		playerAction4.setBorderPainted(false);
 		playerAction4.setVisible(false);
-		playerAction4.setIcon(new ImageIcon(
-				new ImageIcon(CAP.class.getResource("/resources/UI/anytime.png")).getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH)));
-		playerAction4.setSelectedIcon(new ImageIcon(CAP.class.getResource("/resources/UI/null.png")));
-		panel.add(playerAction4);
-		
-		slotPlayerAction4.setVisible(false);
-		slotPlayerAction4.setIcon(new ImageIcon(
-				new ImageIcon(CAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
-		panel.add(slotPlayerAction4);
+		playerAction4.setIcon(new ImageIcon(new ImageIcon(CAP.class.getResource("/resources/UI/anytime slot 2.png")).getImage()
+				.getScaledInstance((int) Math.floor(scalar * 44), (int) Math.floor(scalar * 36), Image.SCALE_SMOOTH)));
+		playerAction4.setSelectedIcon(new ImageIcon(
+				new ImageIcon(CAP.class.getResource("/resources/UI/slot 2.png")).getImage().getScaledInstance(44, 36, Image.SCALE_SMOOTH)));
 		
 		playerAction5.setContentAreaFilled(false);
 		playerAction5.setBorderPainted(false);
 		playerAction5.setVisible(false);
-		playerAction5.setIcon(new ImageIcon(
-				new ImageIcon(CAP.class.getResource("/resources/UI/anytime.png")).getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH)));
-		playerAction5.setSelectedIcon(new ImageIcon(CAP.class.getResource("/resources/UI/null.png")));
-		panel.add(playerAction5);
-		
-		slotPlayerAction5.setVisible(false);
-		slotPlayerAction5.setIcon(new ImageIcon(
-				new ImageIcon(CAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
-		panel.add(slotPlayerAction5);
+		playerAction5.setIcon(new ImageIcon(new ImageIcon(CAP.class.getResource("/resources/UI/anytime slot 2.png")).getImage()
+				.getScaledInstance((int) Math.floor(scalar * 44), (int) Math.floor(scalar * 36), Image.SCALE_SMOOTH)));
+		playerAction5.setSelectedIcon(new ImageIcon(
+				new ImageIcon(CAP.class.getResource("/resources/UI/slot 2.png")).getImage().getScaledInstance(44, 36, Image.SCALE_SMOOTH)));
 		
 		playerAction6.setContentAreaFilled(false);
 		playerAction6.setBorderPainted(false);
 		playerAction6.setVisible(false);
-		playerAction6.setIcon(new ImageIcon(
-				new ImageIcon(CAP.class.getResource("/resources/UI/anytime.png")).getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH)));
-		playerAction6.setSelectedIcon(new ImageIcon(CAP.class.getResource("/resources/UI/null.png")));
-		panel.add(playerAction6);
-		
-		slotPlayerAction6.setVisible(false);
-		slotPlayerAction6.setIcon(new ImageIcon(
-				new ImageIcon(CAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
-		panel.add(slotPlayerAction6);
+		playerAction6.setIcon(new ImageIcon(new ImageIcon(CAP.class.getResource("/resources/UI/anytime slot 2.png")).getImage()
+				.getScaledInstance((int) Math.floor(scalar * 44), (int) Math.floor(scalar * 36), Image.SCALE_SMOOTH)));
+		playerAction6.setSelectedIcon(new ImageIcon(
+				new ImageIcon(CAP.class.getResource("/resources/UI/slot 2.png")).getImage().getScaledInstance(44, 36, Image.SCALE_SMOOTH)));
 		
 		playerAction7.setContentAreaFilled(false);
 		playerAction7.setBorderPainted(false);
 		playerAction7.setVisible(false);
-		playerAction7.setIcon(new ImageIcon(
-				new ImageIcon(CAP.class.getResource("/resources/UI/anytime.png")).getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH)));
-		playerAction7.setSelectedIcon(new ImageIcon(CAP.class.getResource("/resources/UI/null.png")));
+		playerAction7.setIcon(new ImageIcon(new ImageIcon(CAP.class.getResource("/resources/UI/anytime slot 2.png")).getImage()
+				.getScaledInstance((int) Math.floor(scalar * 44), (int) Math.floor(scalar * 36), Image.SCALE_SMOOTH)));
+		playerAction7.setSelectedIcon(new ImageIcon(
+				new ImageIcon(CAP.class.getResource("/resources/UI/slot 2.png")).getImage().getScaledInstance(44, 36, Image.SCALE_SMOOTH)));
+		
+		playerAction8.setContentAreaFilled(false);
+		playerAction8.setBorderPainted(false);
+		playerAction8.setVisible(false);
+		playerAction8.setIcon(new ImageIcon(new ImageIcon(CAP.class.getResource("/resources/UI/anytime slot 2.png")).getImage()
+				.getScaledInstance((int) Math.floor(scalar * 44), (int) Math.floor(scalar * 36), Image.SCALE_SMOOTH)));
+		playerAction8.setSelectedIcon(new ImageIcon(
+				new ImageIcon(CAP.class.getResource("/resources/UI/slot 2.png")).getImage().getScaledInstance(44, 36, Image.SCALE_SMOOTH)));
+		
+		playerAction1.setName("1");
+		playerAction2.setName("2");
+		playerAction3.setName("3");
+		playerAction4.setName("4");
+		playerAction5.setName("5");
+		playerAction6.setName("6");
+		playerAction7.setName("7");
+		playerAction8.setName("8");
+		
+		// --------------------------------------------------------------------------------------------------------------------------------------
+		// LOCATIONS default : 285 20 - Math.floor rounds the double down to the nearest
+		// integer, but this does use some heavy math when starting
+		// --------------------------------------------------------------------------------------------------------------------------------------
+		
+		playerStaminaBar.setBounds((int) Math.floor(scalar * XOne), (int) Math.floor(scalar * (YOne + 5)), (int) Math.floor(scalar * 130),
+				(int) Math.floor(scalar * 15));
+		
+		playerImage.setBounds((int) Math.floor(scalar * (XOne + 10)), (int) Math.floor(scalar * (YOne + 1)), (int) Math.floor(scalar * 110),
+				(int) Math.floor(scalar * 110));
+		
+		playerBackground.setBounds((int) Math.floor(scalar * XOne), (int) Math.floor(scalar * (YOne + 8)), (int) Math.floor(scalar * 130),
+				(int) Math.floor(scalar * 130));
+		
+		playerCompanion1.setBounds((int) Math.floor(scalar * (XOne + 125)), (int) Math.floor(scalar * (YOne + 25)), (int) Math.floor(scalar * 100),
+				(int) Math.floor(scalar * 15));
+		playerCompanion2.setBounds((int) Math.floor(scalar * (XOne + 125)), (int) Math.floor(scalar * (YOne + 40)), (int) Math.floor(scalar * 100),
+				(int) Math.floor(scalar * 15));
+		playerCompanion3.setBounds((int) Math.floor(scalar * (XOne + 125)), (int) Math.floor(scalar * (YOne + 55)), (int) Math.floor(scalar * 100),
+				(int) Math.floor(scalar * 15));
+		
+		playerGoldlbl.setBounds((int) Math.floor(scalar * (XOne - 45)), (int) Math.floor(scalar * (YOne + 70)), (int) Math.floor(scalar * 40),
+				(int) Math.floor(scalar * 12));
+		playerGold.setBounds((int) Math.floor(scalar * (XOne - 40)), (int) Math.floor(scalar * (YOne + 45)), (int) Math.floor(scalar * 30),
+				(int) Math.floor(scalar * 30));
+		
+		playerAction1.setBounds((int) Math.floor(scalar * (XTwo - XOffset + 2)), (int) Math.floor(scalar * (YOne + YOffset)),
+				(int) Math.floor(scalar * 60), (int) Math.floor(scalar * 60));
+		
+		playerAction2.setBounds((int) Math.floor(scalar * (XTwo - 2)), (int) Math.floor(scalar * (YOne + YOffset)), (int) Math.floor(scalar * 60),
+				(int) Math.floor(scalar * 60));
+		
+		playerAction3.setBounds((int) Math.floor(scalar * (XTwo + XOffset - 2)), (int) Math.floor(scalar * (YOne + YOffset)),
+				(int) Math.floor(scalar * 60), (int) Math.floor(scalar * 60));
+		
+		playerAction4.setBounds((int) Math.floor(scalar * (XTwo + (XOffset * 2) - 2)), (int) Math.floor(scalar * (YOne + YOffset)),
+				(int) Math.floor(scalar * 60), (int) Math.floor(scalar * 60));
+		
+		playerAction5.setBounds((int) Math.floor(scalar * (XTwo + (XOffset * 3) - 2)), (int) Math.floor(scalar * (YOne + YOffset)),
+				(int) Math.floor(scalar * 60), (int) Math.floor(scalar * 60));
+		
+		playerAction6.setBounds((int) Math.floor(scalar * (XTwo + (XOffset * 4) - 2)), (int) Math.floor(scalar * (YOne + YOffset)),
+				(int) Math.floor(scalar * 60), (int) Math.floor(scalar * 60));
+		
+		playerAction7.setBounds((int) Math.floor(scalar * (XTwo + (XOffset * 5) - 2)), (int) Math.floor(scalar * (YOne + YOffset)),
+				(int) Math.floor(scalar * 60), (int) Math.floor(scalar * 60));
+		
+		playerAction8.setBounds((int) Math.floor(scalar * (XTwo + (XOffset * 6) - 2)), (int) Math.floor(scalar * (YOne + YOffset)),
+				(int) Math.floor(scalar * 60), (int) Math.floor(scalar * 60));
+		
+		// --------------------------------------------------------------------------------------------------------------------------------------
+		// ADDING
+		// --------------------------------------------------------------------------------------------------------------------------------------
+		
+		panel.add(playerStaminaBar);
+		panel.add(playerCompanion1);
+		panel.add(playerCompanion2);
+		panel.add(playerCompanion3);
+		panel.add(playerGoldlbl);
+		panel.add(playerGold);
+		panel.add(playerAction1);
+		panel.add(playerAction2);
+		panel.add(playerAction3);
+		panel.add(playerAction4);
+		panel.add(playerAction5);
+		panel.add(playerAction6);
 		panel.add(playerAction7);
-		
-		slotPlayerAction7.setVisible(false);
-		slotPlayerAction7.setIcon(new ImageIcon(
-				new ImageIcon(CAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
-		panel.add(slotPlayerAction7);
-		
-		// --------------------------------------------------------------------------------------------------------------------------------------
-		// LOCATIONS 285 20
-		// --------------------------------------------------------------------------------------------------------------------------------------
-		
-		playerStaminaBar.setBounds(XOne, YOne, 130, 15);
-		playerImage.setBounds(XOne, YOne + 13, 130, 93);
-		
-		playerCompanion1.setBounds(XOne + 125, YOne + 25, 100, 15);
-		playerCompanion2.setBounds(XOne + 125, YOne + 40, 100, 15);
-		playerCompanion3.setBounds(XOne + 125, YOne + 55, 100, 15);
-		
-		playerGoldlbl.setBounds(XOne - 50, YOne + 75, 40, 12);
-		playerGold.setBounds(XOne - 45, YOne + 50, 30, 30);
-		
-		playerAction1.setBounds(XTwo - XOffset - 12, YOne + YOffset, 60, 60);
-		slotPlayerAction1.setBounds(XTwo - XOffset, YOne + YOffset, 60, 60);
-		
-		playerAction2.setBounds(XTwo - 12, YOne + YOffset, 60, 60);
-		slotPlayerAction2.setBounds(XTwo, YOne + YOffset, 60, 60);
-		
-		playerAction3.setBounds(XTwo + XOffset - 12, YOne + YOffset, 60, 60);
-		slotPlayerAction3.setBounds(XTwo + XOffset, YOne + YOffset, 60, 60);
-		
-		playerAction4.setBounds(XTwo + (XOffset * 2) - 12, YOne + YOffset, 60, 60);
-		slotPlayerAction4.setBounds(XTwo + (XOffset * 2), YOne + YOffset, 60, 60);
-		
-		playerAction5.setBounds(XTwo + (XOffset * 3) - 12, YOne + YOffset, 60, 60);
-		slotPlayerAction5.setBounds(XTwo + (XOffset * 3), YOne + YOffset, 60, 60);
-		
-		playerAction6.setBounds(XTwo + (XOffset * 4) - 12, YOne + YOffset, 60, 60);
-		slotPlayerAction6.setBounds(XTwo + (XOffset * 4), YOne + YOffset, 60, 60);
-		
-		playerAction7.setBounds(XTwo + (XOffset * 5) - 12, YOne + YOffset, 60, 60);
-		slotPlayerAction7.setBounds(XTwo + (XOffset * 5), YOne + YOffset, 60, 60);
+		panel.add(playerAction8);
+		panel.add(playerImage);
+		panel.add(playerBackground);
 	}
 	
 	public void enable()
@@ -248,6 +302,7 @@ public class CAP {
 		
 		playerStaminaBar.setVisible(true);
 		playerImage.setVisible(true);
+		playerBackground.setVisible(true);
 		if (playerCompanion1enabled)
 			playerCompanion1.setVisible(true);
 		if (playerCompanion2enabled)
@@ -256,26 +311,22 @@ public class CAP {
 			playerCompanion3.setVisible(true);
 		playerGoldlbl.setVisible(true);
 		playerGold.setVisible(true);
-		slotPlayerAction1.setVisible(true);
-		slotPlayerAction2.setVisible(true);
-		slotPlayerAction3.setVisible(true);
-		slotPlayerAction4.setVisible(true);
-		slotPlayerAction5.setVisible(true);
+		if (playeraction1)
+			playerAction1.setVisible(true);
+		if (playeraction2)
+			playerAction2.setVisible(true);
+		if (playeraction3)
+			playerAction3.setVisible(true);
+		if (playeraction4)
+			playerAction4.setVisible(true);
+		if (playeraction5)
+			playerAction5.setVisible(true);
 		if (playeraction6)
-		{
 			playerAction6.setVisible(true);
-			slotPlayerAction6.setVisible(true);
-		}
 		if (playeraction7)
-		{
 			playerAction7.setVisible(true);
-			slotPlayerAction7.setVisible(true);
-		}
-		playerAction1.setVisible(true);
-		playerAction2.setVisible(true);
-		playerAction3.setVisible(true);
-		playerAction4.setVisible(true);
-		playerAction5.setVisible(true);
+		if (playeraction8)
+			playerAction8.setVisible(true);
 	}
 	
 	public void disable()
@@ -284,24 +335,19 @@ public class CAP {
 		
 		playerStaminaBar.setVisible(false);
 		playerImage.setVisible(false);
+		playerBackground.setVisible(false);
 		playerCompanion1.setVisible(false);
 		playerCompanion2.setVisible(false);
 		playerCompanion3.setVisible(false);
 		playerGoldlbl.setVisible(false);
 		playerGold.setVisible(false);
-		slotPlayerAction1.setVisible(false);
-		slotPlayerAction2.setVisible(false);
-		slotPlayerAction3.setVisible(false);
-		slotPlayerAction4.setVisible(false);
-		slotPlayerAction5.setVisible(false);
-		slotPlayerAction6.setVisible(false);
-		slotPlayerAction7.setVisible(false);
 		playerAction1.setVisible(false);
 		playerAction2.setVisible(false);
 		playerAction3.setVisible(false);
 		playerAction4.setVisible(false);
 		playerAction5.setVisible(false);
 		playerAction6.setVisible(false);
+		playerAction7.setVisible(false);
 		playerAction7.setVisible(false);
 	}
 	
@@ -310,39 +356,67 @@ public class CAP {
 		playerStaminaBar.setValue(playerStaminaBar.getMaximum());
 	}
 	
-	public void newRound()
-	{
-		playerAction1.setSelected(false);
-		playerAction2.setSelected(false);
-		playerAction3.setSelected(false);
-		playerAction4.setSelected(false);
-		playerAction5.setSelected(false);
-		playerAction6.setSelected(false);
-		playerAction7.setSelected(false);
-	}
-	
 	public void enableAction(String action, String bool)
 	{
 		boolean b = Boolean.valueOf(bool);
-		switch (action)
+		try
 		{
-			case "6":
-				playeraction6 = b;
-				if (enabled)
+			CAP.class.getDeclaredField("playeraction" + action).setBoolean(this, b);
+			
+			if (b)
+				enabledActions.add(((JButton) CAP.class.getDeclaredField("playerAction" + action).get(this)));
+			else
+				enabledActions.remove(((JButton) CAP.class.getDeclaredField("playerAction" + action).get(this)));
+			
+			Collections.sort(enabledActions, new Comparator<JButton>() {
+				@Override
+				public int compare(JButton o1, JButton o2)
 				{
-					playerAction6.setVisible(b);
-					slotPlayerAction6.setVisible(b);
+					return Integer.valueOf(o1.getName()).compareTo(Integer.valueOf(o2.getName()));
 				}
-				break;
-			case "7":
-				playeraction7 = b;
-				if (enabled)
-				{
-					playerAction7.setVisible(b);
-					slotPlayerAction7.setVisible(b);
-				}
-				break;
+			});
+			
+			int startx = (int) Math.floor(scalar * ((XTwo + XOffset - 2) - (XOffset * (enabledActions.size() / 2))));
+			
+			if ((enabledActions.size() & 1) == 0)
+				startx += 20;
+			
+			for (int i = 0; i < enabledActions.size(); i++)
+			{
+				JButton button = enabledActions.get(i);
+				if (button.getName().equals("1"))
+					button.setLocation(startx + (XOffset * i) + 4, button.getLocation().y);
+				else
+					button.setLocation(startx + (XOffset * i), button.getLocation().y);
+			}
+			
+			if (enabled)
+				((JButton) CAP.class.getDeclaredField("playerAction" + action).get(this)).setVisible(b);
+		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+		{
+			JOptionPane.showMessageDialog(new JFrame(), "An internal error has occurred (C-656e616374)", "Error", JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
 		}
+	}
+	
+	public void setPlayerImage(final String image)
+	{
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run()
+			{
+				try
+				{
+					playerImage.setIcon(new ImageIcon(
+							ImageIO.read(new URL(image)).getScaledInstance(playerImage.getWidth(), playerImage.getHeight(), Image.SCALE_SMOOTH)));
+				} catch (IOException e)
+				{
+					JOptionPane.showMessageDialog(new JFrame(), "An internal error has occurred (C-706c696d616765)", "Error", JOptionPane.ERROR_MESSAGE);
+					System.exit(1);
+				}
+			}
+		}).run();
 	}
 	
 }

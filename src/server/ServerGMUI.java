@@ -1,5 +1,24 @@
 package server;
 
+/**
+	This file is part of 'Char's Stamina Tracker' (Referred to as CST).
+
+    CST is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    CST is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with CST.  If not, see <http://www.gnu.org/licenses/>.
+    
+    Copyright (C) 2018  Charzard4261
+ **/
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -7,19 +26,28 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import client.ClientUI;
+
+// TODO 		
 
 public class ServerGMUI {
 	
@@ -27,6 +55,7 @@ public class ServerGMUI {
 	private ServerGMUI	sgmui	= this;
 	
 	private JFrame	frame;
+	JFrame			optionsFrame;
 	private JPanel	contentPane;
 	public Timer	timer	= new Timer();
 	
@@ -61,6 +90,8 @@ public class ServerGMUI {
 				(GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight() / 2)
 						- (frame.getHeight() / 2));
 		frame.setResizable(false);
+		frame.setTitle("Char's Stamina Tracker");
+		frame.setIconImage(new ImageIcon(ClientUI.class.getResource("/resources/UI/anytime.png")).getImage());
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -77,37 +108,73 @@ public class ServerGMUI {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				JFrame optionsFrame = new JFrame();
-				optionsFrame.setSize(500, 600);
-				optionsFrame.setResizable(false);
-				optionsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				
-				JTabbedPane jtp = new JTabbedPane();
-				optionsFrame.setContentPane(jtp);
-				
-				JPanel p1 = new JPanel();
-				JPanel p2 = new JPanel();
-				JPanel p3 = new JPanel();
-				JPanel p4 = new JPanel();
-				
-				try
+				if (optionsFrame == null)
 				{
-					new Options(sgmui).decorate(p1, 1);
-					new Options(sgmui).decorate(p2, 2);
-					new Options(sgmui).decorate(p3, 3);
-					new Options(sgmui).decorate(p4, 4);
-				} catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-				
-				jtp.addTab("Player 1", p1);
-				jtp.addTab("Player 2", p2);
-				jtp.addTab("Player 3", p3);
-				jtp.addTab("Player 4", p4);
-				
-				optionsFrame.setVisible(true);
-				optionsFrame.repaint();
+					optionsFrame = new JFrame();
+					optionsFrame.setSize(500, 600);
+					optionsFrame.setResizable(false);
+					optionsFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+					
+					JTabbedPane jtp = new JTabbedPane();
+					optionsFrame.setContentPane(jtp);
+					
+					JPanel p1 = new JPanel();
+					JPanel p2 = new JPanel();
+					JPanel p3 = new JPanel();
+					JPanel p4 = new JPanel();
+					JPanel p0 = new JPanel();
+					
+					try
+					{
+						new Options(sgmui).decorate(p1, 1);
+						new Options(sgmui).decorate(p2, 2);
+						new Options(sgmui).decorate(p3, 3);
+						new Options(sgmui).decorate(p4, 4);
+					} catch (Exception e)
+					{
+						JOptionPane.showMessageDialog(new JFrame(), "An internal error has occurred (S-6f7074696f6e73)", "Error", JOptionPane.ERROR_MESSAGE);
+						System.exit(1);
+					}
+					
+					p0.setLayout(null);
+					final JLabel gmImage = new JLabel();
+					gmImage.setBounds((244 - 65), 55, 130, 130);
+					p0.add(gmImage);
+					JLabel gmImagelbl = new JLabel("GM Image Link", SwingConstants.CENTER);
+					gmImagelbl.setBounds((244 - 100), 183, 200, 20);
+					p0.add(gmImagelbl);
+					final JTextField gmLink = new JTextField();
+					gmLink.setColumns(1);
+					gmLink.setBounds((244 - 100), 202, 200, 20);
+					p0.add(gmLink);
+					gmLink.addActionListener(new ActionListener() {
+						
+						@Override
+						public void actionPerformed(ActionEvent arg0)
+						{
+							try
+							{
+								gmImage.setIcon(new ImageIcon(ImageIO.read(new URL(gmLink.getText())).getScaledInstance(gmImage.getWidth(),
+										gmImage.getHeight(), Image.SCALE_SMOOTH)));
+								Server.class.getDeclaredField("gmImage").set(server, gmLink.getText());
+								server.input("gmimage " + gmLink.getText());
+							} catch (IOException | IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
+							{
+								JOptionPane.showMessageDialog(new JFrame(), "Image is invalid", "Error", JOptionPane.ERROR_MESSAGE);
+							}
+						}
+					});
+					
+					jtp.addTab("Player 1", p1);
+					jtp.addTab("Player 2", p2);
+					jtp.addTab("Player 3", p3);
+					jtp.addTab("Player 4", p4);
+					jtp.addTab("Miscellaneous", p0);
+					
+					optionsFrame.setVisible(true);
+					optionsFrame.repaint();
+				} else
+					optionsFrame.setVisible(true);
 			}
 		});
 		menuBar.add(settingsTab);
@@ -237,20 +304,18 @@ public class ServerGMUI {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				server.player1Action1 = true;
-				server.player1Action2 = true;
-				server.player2Action1 = true;
-				server.player2Action2 = true;
-				server.player3Action1 = true;
-				server.player3Action2 = true;
-				server.player4Action1 = true;
-				server.player4Action2 = true;
-				
-				server.input("NewRound");
-				g1.newround();
-				g2.newround();
-				g3.newround();
-				g4.newround();
+				try
+				{
+					g1.newround();
+					g2.newround();
+					g3.newround();
+					g4.newround();
+				} catch (Exception e)
+				{
+					JOptionPane.showMessageDialog(new JFrame(), "An internal error has occurred (S-6e6577726f756e64)", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					System.exit(1);
+				}
 			}
 		});
 		
@@ -285,14 +350,41 @@ public class ServerGMUI {
 				}, 100L);
 				
 				server.player1CStam = server.player1CStam + 1;
-				server.player2CStam = server.player2CStam + 1;
-				server.player3CStam = server.player3CStam + 1;
-				server.player4CStam = server.player4CStam + 1;
+				server.player1c1CStam = server.player1c1CStam + 1;
+				server.player1c2CStam = server.player1c2CStam + 1;
+				server.player1c3CStam = server.player1c3CStam + 1;
 				
-				server.input("Player1Add 1");
-				server.input("Player2Add 1");
-				server.input("Player3Add 1");
-				server.input("Player4Add 1");
+				server.player2CStam = server.player2CStam + 1;
+				server.player2c1CStam = server.player2c1CStam + 1;
+				server.player2c2CStam = server.player2c2CStam + 1;
+				server.player2c3CStam = server.player2c3CStam + 1;
+				
+				server.player3CStam = server.player3CStam + 1;
+				server.player3c1CStam = server.player3c1CStam + 1;
+				server.player3c2CStam = server.player3c2CStam + 1;
+				server.player3c3CStam = server.player3c3CStam + 1;
+				
+				server.player4CStam = server.player4CStam + 1;
+				server.player4c1CStam = server.player4c1CStam + 1;
+				server.player4c2CStam = server.player4c2CStam + 1;
+				server.player4c3CStam = server.player4c3CStam + 1;
+				
+				server.input("Player 1 damage 1");
+				server.input("Companion 1 1 damage 1");
+				server.input("Companion 1 2 damage 1");
+				server.input("Companion 1 3 damage 1");
+				server.input("Player 2 damage 1");
+				server.input("Companion 2 1 damage 1");
+				server.input("Companion 2 2 damage 1");
+				server.input("Companion 2 3 damage 1");
+				server.input("Player 3 damage 1");
+				server.input("Companion 3 1 damage 1");
+				server.input("Companion 3 2 damage 1");
+				server.input("Companion 3 3 damage 1");
+				server.input("Player 4 damage 1");
+				server.input("Companion 4 1 damage 1");
+				server.input("Companion 4 2 damage 1");
+				server.input("Companion 4 3 damage 1");
 			}
 		});
 		
@@ -317,14 +409,41 @@ public class ServerGMUI {
 				}, 100L);
 				
 				server.player1CStam = server.player1CStam + 5;
-				server.player2CStam = server.player2CStam + 5;
-				server.player3CStam = server.player3CStam + 5;
-				server.player4CStam = server.player4CStam + 5;
+				server.player1c1CStam = server.player1c1CStam + 5;
+				server.player1c2CStam = server.player1c2CStam + 5;
+				server.player1c3CStam = server.player1c3CStam + 5;
 				
-				server.input("Player1Add 5");
-				server.input("Player2Add 5");
-				server.input("Player3Add 5");
-				server.input("Player4Add 5");
+				server.player2CStam = server.player2CStam + 5;
+				server.player2c1CStam = server.player2c1CStam + 5;
+				server.player2c2CStam = server.player2c2CStam + 5;
+				server.player2c3CStam = server.player2c3CStam + 5;
+				
+				server.player3CStam = server.player3CStam + 5;
+				server.player3c1CStam = server.player3c1CStam + 5;
+				server.player3c2CStam = server.player3c2CStam + 5;
+				server.player3c3CStam = server.player3c3CStam + 5;
+				
+				server.player4CStam = server.player4CStam + 5;
+				server.player4c1CStam = server.player4c1CStam + 5;
+				server.player4c2CStam = server.player4c2CStam + 5;
+				server.player4c3CStam = server.player4c3CStam + 5;
+				
+				server.input("Player 1 damage 5");
+				server.input("Companion 1 1 damage 5");
+				server.input("Companion 1 2 damage 5");
+				server.input("Companion 1 3 damage 5");
+				server.input("Player 2 damage 5");
+				server.input("Companion 2 1 damage 5");
+				server.input("Companion 2 2 damage 5");
+				server.input("Companion 2 3 damage 5");
+				server.input("Player 3 damage 5");
+				server.input("Companion 3 1 damage 5");
+				server.input("Companion 3 2 damage 5");
+				server.input("Companion 3 3 damage 5");
+				server.input("Player 4 damage 5");
+				server.input("Companion 4 1 damage 5");
+				server.input("Companion 4 2 damage 5");
+				server.input("Companion 4 3 damage 5");
 			}
 		});
 		
@@ -349,14 +468,41 @@ public class ServerGMUI {
 				}, 100L);
 				
 				server.player1CStam = server.player1CStam + 10;
-				server.player2CStam = server.player2CStam + 10;
-				server.player3CStam = server.player3CStam + 10;
-				server.player4CStam = server.player4CStam + 10;
+				server.player1c1CStam = server.player1c1CStam + 10;
+				server.player1c2CStam = server.player1c2CStam + 10;
+				server.player1c3CStam = server.player1c3CStam + 10;
 				
-				server.input("Player1Add 10");
-				server.input("Player2Add 10");
-				server.input("Player3Add 10");
-				server.input("Player4Add 10");
+				server.player2CStam = server.player2CStam + 10;
+				server.player2c1CStam = server.player2c1CStam + 10;
+				server.player2c2CStam = server.player2c2CStam + 10;
+				server.player2c3CStam = server.player2c3CStam + 10;
+				
+				server.player3CStam = server.player3CStam + 10;
+				server.player3c1CStam = server.player3c1CStam + 10;
+				server.player3c2CStam = server.player3c2CStam + 10;
+				server.player3c3CStam = server.player3c3CStam + 10;
+				
+				server.player4CStam = server.player4CStam + 10;
+				server.player4c1CStam = server.player4c1CStam + 10;
+				server.player4c2CStam = server.player4c2CStam + 10;
+				server.player4c3CStam = server.player4c3CStam + 10;
+				
+				server.input("Player 1 damage 10");
+				server.input("Companion 1 1 damage 10");
+				server.input("Companion 1 2 damage 10");
+				server.input("Companion 1 3 damage 10");
+				server.input("Player 2 damage 10");
+				server.input("Companion 2 1 damage 10");
+				server.input("Companion 2 2 damage 10");
+				server.input("Companion 2 3 damage 10");
+				server.input("Player 3 damage 10");
+				server.input("Companion 3 1 damage 10");
+				server.input("Companion 3 2 damage 10");
+				server.input("Companion 3 3 damage 10");
+				server.input("Player 4 damage 10");
+				server.input("Companion 4 1 damage 10");
+				server.input("Companion 4 2 damage 10");
+				server.input("Companion 4 3 damage 10");
 			}
 		});
 		
@@ -381,14 +527,38 @@ public class ServerGMUI {
 				}, 100L);
 				
 				server.player1CStam = server.player1CStam - 1;
+				server.player1c1CStam = server.player1c1CStam - 1;
+				server.player1c2CStam = server.player1c2CStam - 1;
+				server.player1c3CStam = server.player1c3CStam - 1;
 				server.player2CStam = server.player2CStam - 1;
+				server.player2c1CStam = server.player2c1CStam - 1;
+				server.player2c2CStam = server.player2c2CStam - 1;
+				server.player2c3CStam = server.player2c3CStam - 1;
 				server.player3CStam = server.player3CStam - 1;
+				server.player3c1CStam = server.player3c1CStam - 1;
+				server.player3c2CStam = server.player3c2CStam - 1;
+				server.player3c3CStam = server.player3c3CStam - 1;
 				server.player4CStam = server.player4CStam - 1;
+				server.player4c1CStam = server.player4c1CStam - 1;
+				server.player4c2CStam = server.player4c2CStam - 1;
+				server.player4c3CStam = server.player4c3CStam - 1;
 				
-				server.input("Player1Subtract 1");
-				server.input("Player2Subtract 1");
-				server.input("Player3Subtract 1");
-				server.input("Player4Subtract 1");
+				server.input("Player 1 damage -1");
+				server.input("Companion 1 1 damage -1");
+				server.input("Companion 1 2 damage -1");
+				server.input("Companion 1 3 damage -1");
+				server.input("Player 2 damage -1");
+				server.input("Companion 2 1 damage -1");
+				server.input("Companion 2 2 damage -1");
+				server.input("Companion 2 3 damage -1");
+				server.input("Player 3 damage -1");
+				server.input("Companion 3 1 damage -1");
+				server.input("Companion 3 2 damage -1");
+				server.input("Companion 3 3 damage -1");
+				server.input("Player 4 damage -1");
+				server.input("Companion 4 1 damage -1");
+				server.input("Companion 4 2 damage -1");
+				server.input("Companion 4 3 damage -1");
 			}
 		});
 		
@@ -413,14 +583,38 @@ public class ServerGMUI {
 				}, 100L);
 				
 				server.player1CStam = server.player1CStam - 5;
+				server.player1c1CStam = server.player1c1CStam - 5;
+				server.player1c2CStam = server.player1c2CStam - 5;
+				server.player1c3CStam = server.player1c3CStam - 5;
 				server.player2CStam = server.player2CStam - 5;
+				server.player2c1CStam = server.player2c1CStam - 5;
+				server.player2c2CStam = server.player2c2CStam - 5;
+				server.player2c3CStam = server.player2c3CStam - 5;
 				server.player3CStam = server.player3CStam - 5;
+				server.player3c1CStam = server.player3c1CStam - 5;
+				server.player3c2CStam = server.player3c2CStam - 5;
+				server.player3c3CStam = server.player3c3CStam - 5;
 				server.player4CStam = server.player4CStam - 5;
+				server.player4c1CStam = server.player4c1CStam - 5;
+				server.player4c2CStam = server.player4c2CStam - 5;
+				server.player4c3CStam = server.player4c3CStam - 5;
 				
-				server.input("Player1Subtract 5");
-				server.input("Player2Subtract 5");
-				server.input("Player3Subtract 5");
-				server.input("Player4Subtract 5");
+				server.input("Player 1 damage -5");
+				server.input("Companion 1 1 damage -5");
+				server.input("Companion 1 2 damage -5");
+				server.input("Companion 1 3 damage -5");
+				server.input("Player 2 damage -5");
+				server.input("Companion 2 1 damage -5");
+				server.input("Companion 2 2 damage -5");
+				server.input("Companion 2 3 damage -5");
+				server.input("Player 3 damage -5");
+				server.input("Companion 3 1 damage -5");
+				server.input("Companion 3 2 damage -5");
+				server.input("Companion 3 3 damage -5");
+				server.input("Player 4 damage -5");
+				server.input("Companion 4 1 damage -5");
+				server.input("Companion 4 2 damage -5");
+				server.input("Companion 4 3 damage -5");
 			}
 		});
 		
@@ -445,14 +639,38 @@ public class ServerGMUI {
 				}, 100L);
 				
 				server.player1CStam = server.player1CStam - 10;
+				server.player1c1CStam = server.player1c1CStam - 10;
+				server.player1c2CStam = server.player1c2CStam - 10;
+				server.player1c3CStam = server.player1c3CStam - 10;
 				server.player2CStam = server.player2CStam - 10;
+				server.player2c1CStam = server.player2c1CStam - 10;
+				server.player2c2CStam = server.player2c2CStam - 10;
+				server.player2c3CStam = server.player2c3CStam - 10;
 				server.player3CStam = server.player3CStam - 10;
+				server.player3c1CStam = server.player3c1CStam - 10;
+				server.player3c2CStam = server.player3c2CStam - 10;
+				server.player3c3CStam = server.player3c3CStam - 10;
 				server.player4CStam = server.player4CStam - 10;
+				server.player4c1CStam = server.player4c1CStam - 10;
+				server.player4c2CStam = server.player4c2CStam - 10;
+				server.player4c3CStam = server.player4c3CStam - 10;
 				
-				server.input("Player1Subtract 10");
-				server.input("Player2Subtract 10");
-				server.input("Player3Subtract 10");
-				server.input("Player4Subtract 10");
+				server.input("Player 1 damage -10");
+				server.input("Companion 1 1 damage -10");
+				server.input("Companion 1 2 damage -10");
+				server.input("Companion 1 3 damage -10");
+				server.input("Player 2 damage -10");
+				server.input("Companion 2 1 damage -10");
+				server.input("Companion 2 2 damage -10");
+				server.input("Companion 2 3 damage -10");
+				server.input("Player 3 damage -10");
+				server.input("Companion 3 1 damage -10");
+				server.input("Companion 3 2 damage -10");
+				server.input("Companion 3 3 damage -10");
+				server.input("Player 4 damage -10");
+				server.input("Companion 4 1 damage -10");
+				server.input("Companion 4 2 damage -10");
+				server.input("Companion 4 3 damage -10");
 			}
 		});
 		
@@ -492,145 +710,5 @@ public class ServerGMUI {
 				.getScaledInstance(background.getWidth(), background.getHeight(), Image.SCALE_SMOOTH)));
 		contentPane.add(background);
 	}
-	
-	/*
-	 * public void actionsTab(JMenu menu, int player) { JMenu a1 = new
-	 * JMenu("Action 1"); for (JButton button : actionSwapper(player, 1))
-	 * a1.add(button); menu.add(a1); }
-	 * 
-	 * public JButton[] actionSwapper(final int player, final int number) { JButton
-	 * move = new JButton(); move.setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/move.png")).getImage()
-	 * .getScaledInstance(40, 40, Image.SCALE_SMOOTH))); move.setSize(40, 40);
-	 * move.setBorderPainted(false); move.setContentAreaFilled(false);
-	 * move.addActionListener(new ActionListener() {
-	 * 
-	 * @Override public void actionPerformed(ActionEvent arg0) {
-	 * server.input("SetPlayer" + player + "Action" + number + " MOVE");
-	 * actionTypes.replace("p" + player + "a" + number, "MOVE"); swap(player,
-	 * number, "move"); } });
-	 * 
-	 * JButton normal = new JButton(); normal.setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/action.png")).getImage()
-	 * .getScaledInstance(40, 40, Image.SCALE_SMOOTH))); normal.setSize(40, 40);
-	 * normal.setBorderPainted(false); normal.setContentAreaFilled(false);
-	 * normal.addActionListener(new ActionListener() {
-	 * 
-	 * @Override public void actionPerformed(ActionEvent arg0) {
-	 * server.input("SetPlayer" + player + "Action" + number + " NORMAL");
-	 * actionTypes.replace("p" + player + "a" + number, "NORMAL"); swap(player,
-	 * number, "action"); } });
-	 * 
-	 * JButton anytime = new JButton(); anytime.setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/action.png")).getImage()
-	 * .getScaledInstance(40, 40, Image.SCALE_SMOOTH))); anytime.setSize(40, 40);
-	 * anytime.setBorderPainted(false); anytime.setContentAreaFilled(false);
-	 * anytime.addActionListener(new ActionListener() {
-	 * 
-	 * @Override public void actionPerformed(ActionEvent arg0) {
-	 * server.input("SetPlayer" + player + "Action" + number + " ANYTIME");
-	 * actionTypes.replace("p" + player + "a" + number, "ANYTIME"); swap(player,
-	 * number, "anytime"); } });
-	 * 
-	 * return new JButton[] { move, normal, anytime }; }
-	 * 
-	 * public void swap(int player, int number, String type) { if (player == 1) { if
-	 * (number == 1) player1Action1 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 2) player1Action2 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 3) player1Action3 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 4) player1Action4 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 5) player1Action5 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 6) player1Action6 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 7) player1Action7 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 8) player1Action8 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); } else if
-	 * (player == 2) { if (number == 1) player2Action1 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 2) player2Action2 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 3) player2Action3 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 4) player2Action4 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 5) player2Action5 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 6) player2Action6 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 7) player2Action7 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 8) player2Action8 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); } else if
-	 * (player == 3) { if (number == 1) player3Action1 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 2) player3Action2 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 3) player3Action3 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 4) player3Action4 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 5) player3Action5 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 6) player3Action6 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 7) player3Action7 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 8) player3Action8 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); } else if
-	 * (player == 2) { if (number == 1) player4Action1 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 2) player4Action2 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 3) player4Action3 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 4) player4Action4 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 5) player4Action5 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 6) player4Action6 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 7) player4Action7 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); else if (number
-	 * == 8) player4Action8 .setIcon(new ImageIcon(new
-	 * ImageIcon(UI.class.getResource("/resources/UI/" + type + ".png"))
-	 * .getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH))); } }
-	 */
 	
 }

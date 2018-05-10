@@ -1,20 +1,44 @@
 package client;
 
+/**
+	This file is part of 'Char's Stamina Tracker' (Referred to as CST).
+
+    CST is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    CST is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with CST.  If not, see <http://www.gnu.org/licenses/>.
+    
+    Copyright (C) 2018  Charzard4261
+ **/
+
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Rectangle;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import server.Server;
@@ -26,13 +50,13 @@ public class InitUI {
 	
 	public JFrame	frame;
 	private JPanel	contentPane;
-	private JButton	Server;
-	private JButton	Client;
+	private JButton	serverbtn, clientbtn;
+	JLabel			background;
 	
-	private Timer		timer	= new Timer();
-	private JTextField	ipField;
-	private JTextField	portField;
-	private JButton		connect;
+	private Timer				timer	= new Timer();
+	private JTextField			ipField, portField;
+	private JComboBox<Integer>	screens;
+	private JButton				connect;
 	
 	public static void main(String[] args)
 	{
@@ -52,8 +76,8 @@ public class InitUI {
 	private void initUI()
 	{
 		frame = new JFrame();
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(InitUI.class.getResource("/resources/Client/URLogo.png")));
-		frame.setTitle("URealmsUI");
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(InitUI.class.getResource("/resources/UI/action.png")));
+		frame.setTitle("Char's Stamina Tracker");
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocation(500, 200);
@@ -66,27 +90,26 @@ public class InitUI {
 		contentPane.setLayout(null);
 		frame.setContentPane(contentPane);
 		
-		Client = new JButton("");
-		Client.setSelectedIcon(new ImageIcon(InitUI.class.getResource("/resources/Client/ClientP.png")));
-		Client.setIcon(new ImageIcon(InitUI.class.getResource("/resources/Client/Client.png")));
-		Client.setContentAreaFilled(false);
-		Client.setBounds(new Rectangle(87, 285, 100, 50));
-		Client.setBorderPainted(false);
-		Client.setBorder(null);
-		Client.setBackground(Color.WHITE);
-		Client.setBounds(430, 290, 100, 50);
-		contentPane.add(Client);
-		Client.addActionListener(new ActionListener() {
+		clientbtn = new JButton("");
+		clientbtn.setIcon(new ImageIcon(InitUI.class.getResource("/resources/Client/Client.png")));
+		clientbtn.setSelectedIcon(new ImageIcon(InitUI.class.getResource("/resources/Client/ClientP.png")));
+		clientbtn.setContentAreaFilled(false);
+		clientbtn.setBorder(null);
+		clientbtn.setBorderPainted(false);
+		clientbtn.setBackground(Color.WHITE);
+		clientbtn.setBounds(430, 305, 100, 49);
+		contentPane.add(clientbtn);
+		clientbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				Client.setSelected(true);
+				clientbtn.setSelected(true);
 				timer.schedule(new TimerTask() {
 					
 					@Override
 					public void run()
 					{
-						Client.setSelected(false);
+						clientbtn.setSelected(false);
 						
 						client();
 					}
@@ -94,26 +117,26 @@ public class InitUI {
 			}
 		});
 		
-		Server = new JButton("");
-		Server.setIcon(new ImageIcon(InitUI.class.getResource("/resources/Client/Server.png")));
-		Server.setSelectedIcon(new ImageIcon(InitUI.class.getResource("/resources/Client/ServerP.png")));
-		Server.setContentAreaFilled(false);
-		Server.setBorder(null);
-		Server.setBorderPainted(false);
-		Server.setBackground(Color.WHITE);
-		Server.setBounds(new Rectangle(50, 290, 100, 50));
-		contentPane.add(Server);
-		Server.addActionListener(new ActionListener() {
+		serverbtn = new JButton("");
+		serverbtn.setIcon(new ImageIcon(InitUI.class.getResource("/resources/Client/Server.png")));
+		serverbtn.setSelectedIcon(new ImageIcon(InitUI.class.getResource("/resources/Client/ServerP.png")));
+		serverbtn.setContentAreaFilled(false);
+		serverbtn.setBorder(null);
+		serverbtn.setBorderPainted(false);
+		serverbtn.setBackground(Color.WHITE);
+		serverbtn.setBounds(50, 305, 100, 49);
+		contentPane.add(serverbtn);
+		serverbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				Server.setSelected(true);
+				serverbtn.setSelected(true);
 				timer.schedule(new TimerTask() {
 					
 					@Override
 					public void run()
 					{
-						Server.setSelected(false);
+						serverbtn.setSelected(false);
 						
 						frame.setVisible(false);
 						frame.dispose();
@@ -125,12 +148,45 @@ public class InitUI {
 			}
 		});
 		
-		JLabel background = new JLabel("");
-		background.setIcon(new ImageIcon(InitUI.class.getResource("/resources/Client/Generic Cardback.png")));
+		background = new JLabel("");
+		background.setIcon(new ImageIcon(new ImageIcon(InitUI.class.getResource("/resources/Client/background.png")).getImage().getScaledInstance(583,
+				406, Image.SCALE_SMOOTH)));
 		background.setBounds(0, 0, 583, 406);
 		contentPane.add(background);
 		
 		frame.setVisible(true);
+		
+		// new Thread(new Runnable() {
+		//
+		// @Override
+		// public void run()
+		// {
+		// HttpURLConnection con;
+		// try
+		// {
+		// URL url = new URL("https://api.github.com/repos/Charzard4261/URealmsUI");
+		// con = (HttpURLConnection) url.openConnection();
+		// con.setRequestMethod("GET");
+		// con.setRequestProperty("content-type", "application/json");
+		// con.setRequestProperty("Accept", "application/vnd.github.v3+json");
+		// con.connect();
+		// BufferedReader in = new BufferedReader(new
+		// InputStreamReader(con.getInputStream()));
+		// String inputLine;
+		// StringBuffer content = new StringBuffer();
+		// while ((inputLine = in.readLine()) != null)
+		// {
+		// content.append(inputLine);
+		// }
+		// in.close();
+		// con.disconnect();
+		// System.out.print(content);
+		// } catch (IOException e)
+		// {
+		// e.printStackTrace();
+		// }
+		// }
+		// }).start();
 	}
 	
 	public void client()
@@ -138,20 +194,33 @@ public class InitUI {
 		contentPane.removeAll();
 		
 		ipField = new JTextField();
-		ipField.setBounds(250, 80, 100, 20);
+		ipField.setBounds(250, 280, 100, 20);
 		ipField.setText("127.0.0.1");
 		ipField.setBorder(null);
 		contentPane.add(ipField);
 		
 		portField = new JTextField();
-		portField.setBounds(250, 100, 100, 20);
+		portField.setBounds(250, 300, 100, 20);
 		portField.setColumns(13);
 		portField.setText("9002");
 		portField.setBorder(null);
 		contentPane.add(portField);
 		
+		Integer[] screenList = new Integer[GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices().length];
+		ArrayList<Integer> screenNumber = new ArrayList<Integer>();
+		for (int i = 1; i <= GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices().length; i++)
+		{
+			screenNumber.add(i);
+		}
+		screenList = screenNumber.toArray(screenList);
+		
+		screens = new JComboBox<Integer>(screenList);
+		screens.setBounds(290, 330, 20, 20);
+		((JLabel) screens.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(screens);
+		
 		connect = new JButton("Connect");
-		connect.setBounds(250, 300, 100, 20);
+		connect.setBounds(250, 360, 100, 20);
 		contentPane.add(connect);
 		connect.addActionListener(new ActionListener() {
 			
@@ -165,9 +234,6 @@ public class InitUI {
 			
 		});
 		
-		JLabel background = new JLabel("");
-		background.setIcon(new ImageIcon(InitUI.class.getResource("/resources/Client/Generic Cardback.png")));
-		background.setBounds(0, 0, 583, 406);
 		contentPane.add(background);
 		
 		contentPane.repaint();
@@ -203,9 +269,11 @@ public class InitUI {
 							i = Integer.valueOf(t[2]);
 							i = Integer.valueOf(t[3]);
 							f = true;
-						} catch (Exception e)
+						} catch (NumberFormatException e)
 						{
-							
+							JOptionPane.showMessageDialog(new JFrame(), "Couldn't read IP address\nIP should only contain numbers", "Error",
+									JOptionPane.ERROR_MESSAGE);
+							System.exit(1);
 						}
 						
 						if (f)
@@ -228,7 +296,7 @@ public class InitUI {
 					
 				}
 				client = new Client();
-				client.main(ip, port);
+				client.main(ip, port, (int) screens.getSelectedItem());
 				
 			}
 		}, 100);

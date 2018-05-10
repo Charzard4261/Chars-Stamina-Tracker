@@ -1,5 +1,24 @@
 package server;
 
+/**
+	This file is part of 'Char's Stamina Tracker' (Referred to as CST).
+
+    CST is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    CST is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with CST.  If not, see <http://www.gnu.org/licenses/>.
+    
+    Copyright (C) 2018  Charzard4261
+ **/
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -18,11 +37,12 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
-// Game Manager Add Players, or GMAP for short - My cheat way of using reflection to cut the code needed by about a quarter
+// Game Manager Add Players, or GMAP for short - Uses reflection to cut the code needed by about a quarter
 
 public class GMAP {
 	
 	private ServerGMUI	sgmu;
+	private int			number;
 	public JTextField	playerName, playerStam, playerGold, playercStam;
 	JComboBox<String>	playerclbl;
 	JCheckBox			enabled;
@@ -35,6 +55,7 @@ public class GMAP {
 	public void add(ServerGMUI s, JPanel panel, final int number, int xstart, int ystart)
 	{
 		sgmu = s;
+		this.number = number;
 		final Timer timer = sgmu.timer;
 		final Server server = sgmu.server;
 		XOne = xstart;
@@ -456,7 +477,6 @@ public class GMAP {
 		});
 		
 		playerclbl = new JComboBox<String>(new String[] { "Companion 1", "Companion 2", "Companion 3" });
-		// playerclbl.setHorizontalAlignment(SwingConstants.CENTER);
 		playerclbl.setFont(new Font("Arial Unicode MS", Font.PLAIN, 12));
 		playerclbl.addActionListener(new ActionListener() {
 			
@@ -692,8 +712,9 @@ public class GMAP {
 		playerAction1.setBorder(null);
 		playerAction1.setContentAreaFilled(false);
 		playerAction1.setIcon(new ImageIcon(
-				new ImageIcon(GMAP.class.getResource("/resources/UI/move.png")).getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH)));
-		playerAction1.setSelectedIcon(new ImageIcon(new ImageIcon(GMAP.class.getResource("/resources/UI/null.png")).getImage()));
+				new ImageIcon(GMAP.class.getResource("/resources/UI/move slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
+		playerAction1.setSelectedIcon(new ImageIcon(
+				new ImageIcon(GMAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
 		playerAction1.addActionListener(new ActionListener() {
 			
 			@Override
@@ -725,16 +746,12 @@ public class GMAP {
 			}
 		});
 		
-		JLabel slotPlayerAction1 = new JLabel();
-		slotPlayerAction1.setBorder(null);
-		slotPlayerAction1.setIcon(new ImageIcon(
-				new ImageIcon(GMAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
-		
 		playerAction2.setBorder(null);
 		playerAction2.setContentAreaFilled(false);
 		playerAction2.setIcon(new ImageIcon(
-				new ImageIcon(GMAP.class.getResource("/resources/UI/action.png")).getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH)));
-		playerAction2.setSelectedIcon(new ImageIcon(new ImageIcon(GMAP.class.getResource("/resources/UI/null.png")).getImage()));
+				new ImageIcon(GMAP.class.getResource("/resources/UI/action slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
+		playerAction2.setSelectedIcon(new ImageIcon(
+				new ImageIcon(GMAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
 		playerAction2.addActionListener(new ActionListener() {
 			
 			@Override
@@ -766,16 +783,12 @@ public class GMAP {
 			}
 		});
 		
-		JLabel slotPlayerAction2 = new JLabel();
-		slotPlayerAction2.setBorder(null);
-		slotPlayerAction2.setIcon(new ImageIcon(
-				new ImageIcon(GMAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
-		
 		playerAction3.setBorder(null);
 		playerAction3.setContentAreaFilled(false);
 		playerAction3.setIcon(new ImageIcon(
-				new ImageIcon(GMAP.class.getResource("/resources/UI/anytime.png")).getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH)));
-		playerAction3.setSelectedIcon(new ImageIcon(new ImageIcon(GMAP.class.getResource("/resources/UI/null.png")).getImage()));
+				new ImageIcon(GMAP.class.getResource("/resources/UI/anytime slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
+		playerAction3.setSelectedIcon(new ImageIcon(
+				new ImageIcon(GMAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
 		playerAction3.addActionListener(new ActionListener() {
 			
 			@Override
@@ -807,16 +820,12 @@ public class GMAP {
 			}
 		});
 		
-		JLabel slotPlayerAction3 = new JLabel();
-		slotPlayerAction3.setBorder(null);
-		slotPlayerAction3.setIcon(new ImageIcon(
-				new ImageIcon(GMAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
-		
 		playerAction4.setBorder(null);
 		playerAction4.setContentAreaFilled(false);
 		playerAction4.setIcon(new ImageIcon(
-				new ImageIcon(GMAP.class.getResource("/resources/UI/anytime.png")).getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH)));
-		playerAction4.setSelectedIcon(new ImageIcon(new ImageIcon(GMAP.class.getResource("/resources/UI/null.png")).getImage()));
+				new ImageIcon(GMAP.class.getResource("/resources/UI/anytime slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
+		playerAction4.setSelectedIcon(new ImageIcon(
+				new ImageIcon(GMAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
 		playerAction4.addActionListener(new ActionListener() {
 			
 			@Override
@@ -848,16 +857,12 @@ public class GMAP {
 			}
 		});
 		
-		JLabel slotPlayerAction4 = new JLabel();
-		slotPlayerAction4.setBorder(null);
-		slotPlayerAction4.setIcon(new ImageIcon(
-				new ImageIcon(GMAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
-		
 		playerAction5.setBorder(null);
 		playerAction5.setContentAreaFilled(false);
 		playerAction5.setIcon(new ImageIcon(
-				new ImageIcon(GMAP.class.getResource("/resources/UI/anytime.png")).getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH)));
-		playerAction5.setSelectedIcon(new ImageIcon(new ImageIcon(GMAP.class.getResource("/resources/UI/null.png")).getImage()));
+				new ImageIcon(GMAP.class.getResource("/resources/UI/anytime slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
+		playerAction5.setSelectedIcon(new ImageIcon(
+				new ImageIcon(GMAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
 		playerAction5.addActionListener(new ActionListener() {
 			
 			@Override
@@ -889,16 +894,12 @@ public class GMAP {
 			}
 		});
 		
-		JLabel slotPlayerAction5 = new JLabel();
-		slotPlayerAction5.setBorder(null);
-		slotPlayerAction5.setIcon(new ImageIcon(
-				new ImageIcon(GMAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
-		
 		playerAction6.setBorder(null);
 		playerAction6.setContentAreaFilled(false);
 		playerAction6.setIcon(new ImageIcon(
-				new ImageIcon(GMAP.class.getResource("/resources/UI/anytime.png")).getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH)));
-		playerAction6.setSelectedIcon(new ImageIcon(new ImageIcon(GMAP.class.getResource("/resources/UI/null.png")).getImage()));
+				new ImageIcon(GMAP.class.getResource("/resources/UI/anytime slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
+		playerAction6.setSelectedIcon(new ImageIcon(
+				new ImageIcon(GMAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
 		playerAction6.addActionListener(new ActionListener() {
 			
 			@Override
@@ -930,16 +931,12 @@ public class GMAP {
 			}
 		});
 		
-		JLabel slotPlayerAction6 = new JLabel();
-		slotPlayerAction6.setBorder(null);
-		slotPlayerAction6.setIcon(new ImageIcon(
-				new ImageIcon(GMAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
-		
 		playerAction7.setBorder(null);
 		playerAction7.setContentAreaFilled(false);
 		playerAction7.setIcon(new ImageIcon(
-				new ImageIcon(GMAP.class.getResource("/resources/UI/anytime.png")).getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH)));
-		playerAction7.setSelectedIcon(new ImageIcon(new ImageIcon(GMAP.class.getResource("/resources/UI/null.png")).getImage()));
+				new ImageIcon(GMAP.class.getResource("/resources/UI/anytime slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
+		playerAction7.setSelectedIcon(new ImageIcon(
+				new ImageIcon(GMAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
 		playerAction7.addActionListener(new ActionListener() {
 			
 			@Override
@@ -971,16 +968,12 @@ public class GMAP {
 			}
 		});
 		
-		JLabel slotPlayerAction7 = new JLabel();
-		slotPlayerAction7.setBorder(null);
-		slotPlayerAction7.setIcon(new ImageIcon(
-				new ImageIcon(GMAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
-		
 		playerAction8.setBorder(null);
 		playerAction8.setContentAreaFilled(false);
 		playerAction8.setIcon(new ImageIcon(
-				new ImageIcon(GMAP.class.getResource("/resources/UI/anytime.png")).getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH)));
-		playerAction8.setSelectedIcon(new ImageIcon(new ImageIcon(GMAP.class.getResource("/resources/UI/null.png")).getImage()));
+				new ImageIcon(GMAP.class.getResource("/resources/UI/anytime slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
+		playerAction8.setSelectedIcon(new ImageIcon(
+				new ImageIcon(GMAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
 		playerAction8.addActionListener(new ActionListener() {
 			
 			@Override
@@ -1012,11 +1005,6 @@ public class GMAP {
 			}
 		});
 		
-		JLabel slotPlayerAction8 = new JLabel();
-		slotPlayerAction8.setBorder(null);
-		slotPlayerAction8.setIcon(new ImageIcon(
-				new ImageIcon(GMAP.class.getResource("/resources/UI/slot.png")).getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH)));
-		
 		playerAction6.setEnabled(false);
 		playerAction7.setEnabled(false);
 		playerAction8.setEnabled(false);
@@ -1031,48 +1019,40 @@ public class GMAP {
 		playerGoldlbl.setBounds(XOne + 135, YOne + 30, 70, 20);
 		playerGold.setBounds(XOne + 135, YOne + 55, 70, 30);
 		
-		playerplus1.setBounds(XOne, YOne, 40, 20);
-		playerplus5.setBounds(XOne + XOffsetOne, YOne, 40, 20);
-		playerplus10.setBounds(XOne + (XOffsetOne * 2), YOne, 40, 20);
-		playerminus1.setBounds(XOne + (XOffsetOne * 2) + XOffsetTwo, YOne, 40, 20);
-		playerminus5.setBounds(XOne + (XOffsetOne * 3) + XOffsetTwo, YOne, 40, 20);
-		playerminus10.setBounds(XOne + (XOffsetOne * 4) + XOffsetTwo, YOne, 40, 20);
+		playerminus1.setBounds(XOne, YOne, 40, 20);
+		playerminus5.setBounds(XOne + XOffsetOne, YOne, 40, 20);
+		playerminus10.setBounds(XOne + (XOffsetOne * 2), YOne, 40, 20);
+		playerplus1.setBounds(XOne + (XOffsetOne * 2) + XOffsetTwo, YOne, 40, 20);
+		playerplus5.setBounds(XOne + (XOffsetOne * 3) + XOffsetTwo, YOne, 40, 20);
+		playerplus10.setBounds(XOne + (XOffsetOne * 4) + XOffsetTwo, YOne, 40, 20);
 		
-		playerplus10gold.setBounds(XOne, YOne + YOffset, 40, 20);
-		playerplus100gold.setBounds(XOne + XOffsetOne, YOne + YOffset, 40, 20);
-		playerplus500gold.setBounds(XOne + (XOffsetOne * 2), YOne + YOffset, 40, 20);
-		playerminus10gold.setBounds(XOne + (XOffsetOne * 2) + XOffsetTwo, YOne + YOffset, 40, 20);
-		playerminus100gold.setBounds(XOne + (XOffsetOne * 3) + XOffsetTwo, YOne + YOffset, 40, 20);
-		playerminus500gold.setBounds(XOne + (XOffsetOne * 4) + XOffsetTwo, YOne + YOffset, 40, 20);
+		playerminus10gold.setBounds(XOne, YOne + YOffset, 40, 20);
+		playerminus100gold.setBounds(XOne + XOffsetOne, YOne + YOffset, 40, 20);
+		playerminus500gold.setBounds(XOne + (XOffsetOne * 2), YOne + YOffset, 40, 20);
+		playerplus10gold.setBounds(XOne + (XOffsetOne * 2) + XOffsetTwo, YOne + YOffset, 40, 20);
+		playerplus100gold.setBounds(XOne + (XOffsetOne * 3) + XOffsetTwo, YOne + YOffset, 40, 20);
+		playerplus500gold.setBounds(XOne + (XOffsetOne * 4) + XOffsetTwo, YOne + YOffset, 40, 20);
 		
 		playerclbl.setBounds(XOne + 120, YOne + 90, 100, 20);
 		enabled.setBounds(XOne + 250, YOne + 90, 20, 20);
 		playercStam.setBounds(XOne + 135, YOne + 115, 70, 30);
 		
-		playercplus1.setBounds(XOne, YOne + (YOffset * 2), 40, 20);
-		playercplus5.setBounds(XOne + XOffsetOne, YOne + (YOffset * 2), 40, 20);
-		playercplus10.setBounds(XOne + (XOffsetOne * 2), YOne + (YOffset * 2), 40, 20);
-		playercminus1.setBounds(XOne + (XOffsetOne * 2) + XOffsetTwo, YOne + (YOffset * 2), 40, 20);
-		playercminus5.setBounds(XOne + (XOffsetOne * 3) + XOffsetTwo, YOne + (YOffset * 2), 40, 20);
-		playercminus10.setBounds(XOne + (XOffsetOne * 4) + XOffsetTwo, YOne + (YOffset * 2), 40, 20);
+		playercminus1.setBounds(XOne, YOne + (YOffset * 2), 40, 20);
+		playercminus5.setBounds(XOne + XOffsetOne, YOne + (YOffset * 2), 40, 20);
+		playercminus10.setBounds(XOne + (XOffsetOne * 2), YOne + (YOffset * 2), 40, 20);
+		playercplus1.setBounds(XOne + (XOffsetOne * 2) + XOffsetTwo, YOne + (YOffset * 2), 40, 20);
+		playercplus5.setBounds(XOne + (XOffsetOne * 3) + XOffsetTwo, YOne + (YOffset * 2), 40, 20);
+		playercplus10.setBounds(XOne + (XOffsetOne * 4) + XOffsetTwo, YOne + (YOffset * 2), 40, 20);
 		
-		playerAction1.setBounds(XOne - 10, YOne + (YOffset * 2) + 30, 60, 60);
-		playerAction2.setBounds(XOne - 10 + 45, YOne + (YOffset * 2) + 30, 60, 60);
-		playerAction3.setBounds(XOne - 10 + (45 * 2), YOne + (YOffset * 2) + 30, 60, 60);
-		playerAction4.setBounds(XOne - 10 + (45 * 2) + 60, YOne + (YOffset * 2) + 30, 60, 60);
-		playerAction5.setBounds(XOne - 10 + (45 * 2) + 120, YOne + (YOffset * 2) + 30, 60, 60);
-		playerAction6.setBounds(XOne - 10 + (45 * 3) + 120, YOne + (YOffset * 2) + 30, 60, 60);
-		playerAction7.setBounds(XOne - 10 + (45 * 4) + 120, YOne + (YOffset * 2) + 30, 60, 60);
-		playerAction8.setBounds(XOne - 10 + (45 * 2) + 60, YOne + (YOffset * 2) + 70, 60, 60);
+		playerAction1.setBounds(XOne - 10 + (45 * 2) - 60, YOne + (YOffset * 2) + 30, 60, 60);
+		playerAction2.setBounds(XOne - 10 + (45 * 2), YOne + (YOffset * 2) + 30, 60, 60);
+		playerAction3.setBounds(XOne - 10 + (45 * 2) + 60, YOne + (YOffset * 2) + 30, 60, 60);
+		playerAction4.setBounds(XOne - 10 + (45 * 2) + 120, YOne + (YOffset * 2) + 30, 60, 60);
+		playerAction5.setBounds(XOne - 10 + (45 * 2) + 180, YOne + (YOffset * 2) + 30, 60, 60);
 		
-		slotPlayerAction1.setBounds(XOne + 2, YOne + (YOffset * 2) + 30, 60, 60);
-		slotPlayerAction2.setBounds(XOne + 2 + 45, YOne + (YOffset * 2) + 30, 60, 60);
-		slotPlayerAction3.setBounds(XOne + 2 + (45 * 2), YOne + (YOffset * 2) + 30, 60, 60);
-		slotPlayerAction4.setBounds(XOne + 2 + (45 * 2) + 60, YOne + (YOffset * 2) + 30, 60, 60);
-		slotPlayerAction5.setBounds(XOne + 2 + (45 * 2) + 120, YOne + (YOffset * 2) + 30, 60, 60);
-		slotPlayerAction6.setBounds(XOne + 2 + (45 * 3) + 120, YOne + (YOffset * 2) + 30, 60, 60);
-		slotPlayerAction7.setBounds(XOne + 2 + (45 * 4) + 120, YOne + (YOffset * 2) + 30, 60, 60);
-		slotPlayerAction8.setBounds(XOne + 2 + (45 * 2) + 60, YOne + (YOffset * 2) + 70, 60, 60);
+		playerAction6.setBounds(XOne - 10 + (45 * 2), YOne + (YOffset * 2) + 80, 60, 60);
+		playerAction7.setBounds(XOne - 10 + (45 * 2) + 60, YOne + (YOffset * 2) + 80, 60, 60);
+		playerAction8.setBounds(XOne - 10 + (45 * 2) + 120, YOne + (YOffset * 2) + 80, 60, 60);
 		
 		// --------------------------------------------------------------------------------------------------------------------------------------
 		// ADDING
@@ -1081,57 +1061,89 @@ public class GMAP {
 		panel.add(lbl);
 		panel.add(playerName);
 		panel.add(playerStam);
-		panel.add(playerplus1);
 		panel.add(playerminus1);
-		panel.add(playerplus5);
 		panel.add(playerminus5);
-		panel.add(playerplus10);
 		panel.add(playerminus10);
+		panel.add(playerplus5);
+		panel.add(playerplus10);
+		panel.add(playerplus1);
 		panel.add(playerGoldlbl);
 		panel.add(playerGold);
-		panel.add(playerplus10gold);
 		panel.add(playerminus10gold);
-		panel.add(playerplus100gold);
 		panel.add(playerminus100gold);
-		panel.add(playerplus500gold);
 		panel.add(playerminus500gold);
+		panel.add(playerplus10gold);
+		panel.add(playerplus100gold);
+		panel.add(playerplus500gold);
 		panel.add(playerclbl);
 		panel.add(enabled);
 		panel.add(playercStam);
-		panel.add(playercplus1);
-		panel.add(playercplus5);
-		panel.add(playercplus10);
 		panel.add(playercminus1);
 		panel.add(playercminus5);
 		panel.add(playercminus10);
+		panel.add(playercplus1);
+		panel.add(playercplus5);
+		panel.add(playercplus10);
 		panel.add(playerAction1);
-		panel.add(slotPlayerAction1);
 		panel.add(playerAction2);
-		panel.add(slotPlayerAction2);
 		panel.add(playerAction3);
-		panel.add(slotPlayerAction3);
 		panel.add(playerAction4);
-		panel.add(slotPlayerAction4);
 		panel.add(playerAction5);
-		panel.add(slotPlayerAction5);
 		panel.add(playerAction6);
-		panel.add(slotPlayerAction6);
 		panel.add(playerAction7);
-		panel.add(slotPlayerAction7);
 		panel.add(playerAction8);
-		panel.add(slotPlayerAction8);
 	}
 	
-	public void newround()
+	public void newround() throws Exception
 	{
-		playerAction1.setEnabled(true);
-		playerAction2.setEnabled(true);
-		playerAction3.setEnabled(true);
-		playerAction4.setEnabled(true);
-		playerAction5.setEnabled(true);
-		playerAction6.setEnabled(true);
-		playerAction7.setEnabled(true);
-		playerAction8.setEnabled(true);
+		if (sgmu.server.actionTypes.get("p" + number + "a1") != "ANYTIME")
+		{
+			playerAction1.setSelected(false);
+			Server.class.getDeclaredField("player" + number + "Action1").setBoolean(sgmu.server, true);
+			sgmu.server.input("Player " + number + " action 1 true");
+		}
+		if (sgmu.server.actionTypes.get("p" + number + "a2") != "ANYTIME")
+		{
+			playerAction2.setSelected(false);
+			Server.class.getDeclaredField("player" + number + "Action2").setBoolean(sgmu.server, true);
+			sgmu.server.input("Player " + number + " action 2 true");
+		}
+		if (sgmu.server.actionTypes.get("p" + number + "a3") != "ANYTIME")
+		{
+			playerAction3.setSelected(false);
+			Server.class.getDeclaredField("player" + number + "Action3").setBoolean(sgmu.server, true);
+			sgmu.server.input("Player " + number + " action 3 true");
+		}
+		if (sgmu.server.actionTypes.get("p" + number + "a4") != "ANYTIME")
+		{
+			playerAction4.setSelected(false);
+			Server.class.getDeclaredField("player" + number + "Action4").setBoolean(sgmu.server, true);
+			sgmu.server.input("Player " + number + " action 4 true");
+		}
+		if (sgmu.server.actionTypes.get("p" + number + "a5") != "ANYTIME")
+		{
+			playerAction5.setSelected(false);
+			Server.class.getDeclaredField("player" + number + "Action5").setBoolean(sgmu.server, true);
+			sgmu.server.input("Player " + number + " action 5 true");
+		}
+		if (sgmu.server.actionTypes.get("p" + number + "a6") != "ANYTIME")
+		{
+			playerAction6.setSelected(false);
+			Server.class.getDeclaredField("player" + number + "Action6").setBoolean(sgmu.server, true);
+			sgmu.server.input("Player " + number + " action 6 true");
+		}
+		if (sgmu.server.actionTypes.get("p" + number + "a7") != "ANYTIME")
+		{
+			playerAction7.setSelected(false);
+			Server.class.getDeclaredField("player" + number + "Action7").setBoolean(sgmu.server, true);
+			sgmu.server.input("Player " + number + " action 7 true");
+		}
+		if (sgmu.server.actionTypes.get("p" + number + "a8") != "ANYTIME")
+		{
+			playerAction8.setSelected(false);
+			Server.class.getDeclaredField("player" + number + "Action8").setBoolean(sgmu.server, true);
+			sgmu.server.input("Player " + number + " action 8 true");
+		}
 	}
 	
 }
