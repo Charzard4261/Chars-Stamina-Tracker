@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
 
 public class Server {
 	
-	public ServerUI		gui;
+//	public ServerUI		gui;
 	public ServerGMUI	gmui;
 	
 	public HashSet<Handler> handlers = new HashSet<Handler>();
